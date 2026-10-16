@@ -10,7 +10,7 @@ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:en
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1720;--surface:#17222d;--ink:#e8eef4;--muted:#9aabbb;--line:#2a3948;--blue:#7c9bff;--onblue:#0f1720}}
 :root[data-theme="dark"]{--bg:#0f1720;--surface:#17222d;--ink:#e8eef4;--muted:#9aabbb;--line:#2a3948;--blue:#7c9bff;--onblue:#0f1720}
 *,*::before,*::after{box-sizing:inherit}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 76px)}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 "IBM Plex Sans",system-ui,sans-serif}
 h1,h2,h3{font-family:"Bricolage Grotesque",system-ui,sans-serif;line-height:1.05;margin:0}
 a{color:inherit}
@@ -72,6 +72,15 @@ details p{margin:10px 0 0;color:var(--muted)}
 .fnav{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:20px}.fnav a{color:var(--muted)}
 mark{background:var(--yellow);color:#14202b;padding:0 4px;border-radius:3px}
 .note{font-size:13px;color:var(--muted);margin:14px 0 0}
+.bar{display:block;padding:0;position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);box-shadow:0 4px 16px rgba(20,32,43,.16);border-bottom:1px solid var(--line)}
+.hd{display:flex;justify-content:space-between;align-items:center;padding-top:14px;padding-bottom:14px}
+body::before{content:'';position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+.szh{font-weight:500;font-size:15px;margin:0 0 6px}
+.dims{margin-bottom:14px}.dims label{margin:0}
+.shapes{display:flex;flex-wrap:wrap;gap:8px;padding:12px 4px 4px}
+.chip{font:500 13px inherit;font-family:inherit;padding:6px 12px;border:1.5px solid var(--line);border-radius:999px;background:transparent;color:var(--ink);cursor:pointer}
+.chip:hover{border-color:var(--blue)}
+.chip[aria-pressed='true']{background:var(--blue);color:var(--onblue);border-color:var(--blue)}
 html[lang='el'] [lang='en']{display:none}
 html:not([lang='el']) [lang='el']{display:none}
 .hr{display:flex;align-items:center;gap:8px}
@@ -85,11 +94,11 @@ html:not([lang='el']) [lang='el']{display:none}
 </style>
 </head>
 <body>
-<div class="wrap">
-<header>
+<header class="bar"><div class="wrap hd">
   <a class="logo" href="#top"><i></i>Layerwork</a>
   <div class="hr"><nav lang="en"><a href="#materials">Materials</a><a href="#process">How it works</a><a href="#faq">FAQ</a><a href="#contact">Contact</a></nav><nav lang="el"><a href="#materials-el">Υλικά</a><a href="#process-el">Πώς λειτουργεί</a><a href="#faq-el">Ερωτήσεις</a><a href="#contact-el">Επικοινωνία</a></nav><button class="lang" id="lg" type="button">Ελληνικά</button></div>
-</header>
+</div></header>
+<div class="wrap">
 
 <main id="top">
 <div class="hero">
@@ -105,6 +114,7 @@ html:not([lang='el']) [lang='el']{display:none}
   </div>
   <div class="plate" aria-label="3D print animation">
     <canvas id="c" width="560" height="560"></canvas>
+    <div class="shapes" id="shp" role="group" aria-label="Shapes"></div>
     <div class="status"><span id="lay">Layer 0 / 120</span><span><span lang="en">0.2 mm layers · PETG</span><span lang="el">στρώσεις 0,2 mm · PETG</span></span></div>
   </div>
 </div>
@@ -114,10 +124,14 @@ html:not([lang='el']) [lang='el']{display:none}
   <p class="lead">Not sure? Choose PLA for looks, PETG for parts that get used, ASA for the outdoors.</p>
   <div class="tbl"><table>
     <tr><th>Material</th><th>Best for</th><th>Strength</th><th>Heat limit</th><th>Price</th></tr>
-    <tr><td><span class="sw" style="background:#2f5bea"></span>PLA</td><td>Models, display pieces, fit checks</td><td>Medium, stiff</td><td>55 °C</td><td>from €0.04 / g</td></tr>
-    <tr><td><span class="sw" style="background:#f2c230"></span>PETG</td><td>Brackets, enclosures, water contact</td><td>High, a little flexible</td><td>75 °C</td><td>from €0.05 / g</td></tr>
-    <tr><td><span class="sw" style="background:#8a96a3"></span>ASA</td><td>Outdoor parts, car interiors</td><td>High, UV stable</td><td>95 °C</td><td>from €0.07 / g</td></tr>
-    <tr><td><span class="sw" style="background:#3bb58a"></span>Resin</td><td>Fine detail, small figures, jewelry masters</td><td>Brittle, very smooth</td><td>60 °C</td><td>from €0.18 / ml</td></tr>
+    <tr><td><span class="sw" style="background:#2f5bea"></span>PLA</td><td>Models, display pieces, fit checks</td><td>Medium, stiff</td><td>55 °C</td><td>from €40 / kg</td></tr>
+    <tr><td><span class="sw" style="background:#f2c230"></span>PETG</td><td>Brackets, enclosures, water contact</td><td>High, a little flexible</td><td>75 °C</td><td>from €50 / kg</td></tr>
+    <tr><td><span class="sw" style="background:#8a96a3"></span>ASA</td><td>Outdoor parts, car interiors</td><td>High, UV stable</td><td>95 °C</td><td>from €70 / kg</td></tr>
+    <tr><td><span class="sw" style="background:#e0684b"></span>ABS</td><td>Tough housings, tools, parts you sand or paint</td><td>High, impact resistant</td><td>90 °C</td><td>from €50 / kg</td></tr>
+    <tr><td><span class="sw" style="background:#9b59d0"></span>TPU</td><td>Flexible parts: seals, grips, bumpers, phone cases</td><td>Flexible, wear resistant</td><td>80 °C</td><td>from €70 / kg</td></tr>
+    <tr><td><span class="sw" style="background:#c9b79c"></span>Nylon (PA12)</td><td>Gears, hinges, moving parts</td><td>Very high, low friction</td><td>110 °C</td><td>from €110 / kg</td></tr>
+    <tr><td><span class="sw" style="background:#2b2f36"></span>Carbon nylon (PA-CF)</td><td>Stiff, light structural parts and jigs</td><td>Very high, very stiff</td><td>120 °C</td><td>from €180 / kg</td></tr>
+    <tr><td><span class="sw" style="background:#3bb58a"></span>Resin</td><td>Fine detail, small figures, jewelry masters</td><td>Brittle, very smooth</td><td>60 °C</td><td>from €180 / litre</td></tr>
   </table></div>
 </section>
 
@@ -126,10 +140,14 @@ html:not([lang='el']) [lang='el']{display:none}
   <p class='lead'>Δεν είστε σίγουροι; PLA για εμφάνιση, PETG για εξαρτήματα που χρησιμοποιούνται, ASA για εξωτερικούς χώρους.</p>
   <div class='tbl'><table>
     <tr><th>Υλικό</th><th>Ιδανικό για</th><th>Αντοχή</th><th>Όριο θερμοκρασίας</th><th>Τιμή</th></tr>
-    <tr><td><span class='sw' style='background:#2f5bea'></span>PLA</td><td>Μακέτες, αντικείμενα επίδειξης, δοκιμές εφαρμογής</td><td>Μέτρια, άκαμπτο</td><td>55 °C</td><td>από €0,04 / g</td></tr>
-    <tr><td><span class='sw' style='background:#f2c230'></span>PETG</td><td>Βάσεις, περιβλήματα, επαφή με νερό</td><td>Υψηλή, ελαφρώς εύκαμπτο</td><td>75 °C</td><td>από €0,05 / g</td></tr>
-    <tr><td><span class='sw' style='background:#8a96a3'></span>ASA</td><td>Εξωτερικά εξαρτήματα, εσωτερικά αυτοκινήτων</td><td>Υψηλή, ανθεκτικό στην UV</td><td>95 °C</td><td>από €0,07 / g</td></tr>
-    <tr><td><span class='sw' style='background:#3bb58a'></span>Ρητίνη</td><td>Λεπτομέρεια, μικρά ειδώλια, πρότυπα κοσμημάτων</td><td>Εύθραυστη, πολύ λεία</td><td>60 °C</td><td>από €0,18 / ml</td></tr>
+    <tr><td><span class='sw' style='background:#2f5bea'></span>PLA</td><td>Μακέτες, αντικείμενα επίδειξης, δοκιμές εφαρμογής</td><td>Μέτρια, άκαμπτο</td><td>55 °C</td><td>από €40 / kg</td></tr>
+    <tr><td><span class='sw' style='background:#f2c230'></span>PETG</td><td>Βάσεις, περιβλήματα, επαφή με νερό</td><td>Υψηλή, ελαφρώς εύκαμπτο</td><td>75 °C</td><td>από €50 / kg</td></tr>
+    <tr><td><span class='sw' style='background:#8a96a3'></span>ASA</td><td>Εξωτερικά εξαρτήματα, εσωτερικά αυτοκινήτων</td><td>Υψηλή, ανθεκτικό στην UV</td><td>95 °C</td><td>από €70 / kg</td></tr>
+    <tr><td><span class='sw' style='background:#e0684b'></span>ABS</td><td>Αντισταθμίζουν περιβλήματα, εργαλεία, τεμάχια για τρίψιμο ή βαφή</td><td>Υψηλή, ανθεκτικό σε χτυπήματα</td><td>90 °C</td><td>από €50 / kg</td></tr>
+    <tr><td><span class='sw' style='background:#9b59d0'></span>TPU</td><td>Εύκαμπτα τεμάχια: στεγανοποιήσεις, λαβές, προφυλακτήρες, θήκες κινητών</td><td>Εύκαμπτο, ανθεκτικό στη φθορά</td><td>80 °C</td><td>από €70 / kg</td></tr>
+    <tr><td><span class='sw' style='background:#c9b79c'></span>Nylon (PA12)</td><td>Γρανάζια, βαρδούλες, κινούμενα εξαρτήματα</td><td>Πολύ υψηλή, χαμηλή τριβή</td><td>110 °C</td><td>από €110 / kg</td></tr>
+    <tr><td><span class='sw' style='background:#2b2f36'></span>Nylon με ίνες άνθρακα (PA-CF)</td><td>Ακαμπτα, ελαφρά δομικά τεμάχια και εξαρτήματα στήριξης</td><td>Πολύ υψηλή, πολύ άκαμπτο</td><td>120 °C</td><td>από €180 / kg</td></tr>
+    <tr><td><span class='sw' style='background:#3bb58a'></span>Ρητίνη</td><td>Λεπτομέρεια, μικρά ειδώλια, πρότυπα κοσμημάτων</td><td>Εύθραυστη, πολύ λεία</td><td>60 °C</td><td>από €180 / λίτρο</td></tr>
   </table></div>
 </section>
 
@@ -139,11 +157,11 @@ html:not([lang='el']) [lang='el']{display:none}
   <div class="quote">
     <div class="card">
       <label>Material
-        <select id="mat"><option value="1.24|0.04">PLA</option><option value="1.27|0.05" selected>PETG</option><option value="1.07|0.07">ASA</option></select>
+        <select id="mat"><option value="1.24|0.04">PLA</option><option value="1.27|0.05" selected>PETG</option><option value="1.04|0.05">ABS</option><option value="1.07|0.07">ASA</option><option value="1.21|0.07">TPU (flexible)</option><option value="1.01|0.11">Nylon (PA12)</option><option value="1.15|0.18">Carbon nylon (PA-CF)</option></select>
       </label>
-      <label>Size in mm (Length, Width, Height)
-        <span class="dims"><input type="number" id="x" value="80" min="5" max="250" aria-label="Length mm"><input type="number" id="y" value="60" min="5" max="250" aria-label="Width mm"><input type="number" id="z" value="40" min="5" max="250" aria-label="Height mm"></span>
-      </label>
+      <div class="szh">Size in mm (maximum 250 per side)</div>
+      <div class="dims"><label>Length<input type="number" id="x" value="80" min="5" max="250"></label><label>Width<input type="number" id="y" value="60" min="5" max="250"></label><label>Height<input type="number" id="z" value="40" min="5" max="250"></label></div>
+      <p class="note" id="lim" role="status" style="margin:-6px 0 14px"></p>
       <label>Infill: <b id="ifv">20%</b>
         <input type="range" id="inf" min="5" max="100" value="20">
       </label>
@@ -156,10 +174,10 @@ html:not([lang='el']) [lang='el']{display:none}
       <dl>
         <dt>Plastic used</dt><dd id="g">–</dd>
         <dt>Print time per part</dt><dd id="h">–</dd>
-        <dt>Setup fee</dt><dd>€5.00</dd>
+        <dt>Setup fee</dt><dd>€9.00</dd>
       </dl>
-      <p style="margin:22px 0 0"><a class="btn" href="mailto:info@mr3dprinter.eu?subject=Print%20quote">Send us your file</a></p>
-      <p class="note">This estimate is calculated in your browser. Nothing you enter here is sent or stored. If you email us, see our <a href="#privacy">privacy notice</a>.</p>
+      <p style="margin:22px 0 0;display:flex;flex-wrap:wrap;gap:10px"><a class="btn" id="mail" href="mailto:info@mr3dprinter.eu">Email this estimate</a><button class="btn alt" id="copy" type="button" style="margin:0">Copy as text</button></p>
+      <p class="note">This estimate is calculated in your browser. Nothing you enter here is sent or stored. The button opens your email app with these details filled in, so remember to attach your 3D file. If you email us, see our <a href="#privacy">privacy notice</a>.</p>
     </div>
   </div>
 </section>
@@ -170,12 +188,12 @@ html:not([lang='el']) [lang='el']{display:none}
   <div class='quote'>
     <div class='card'>
       <label>Υλικό
-        <select id='mate'><option value='1.24|0.04'>PLA</option><option value='1.27|0.05' selected>PETG</option><option value='1.07|0.07'>ASA</option></select>
+        <select id='mate'><option value='1.24|0.04'>PLA</option><option value='1.27|0.05' selected>PETG</option><option value='1.04|0.05'>ABS</option><option value='1.07|0.07'>ASA</option><option value='1.21|0.07'>TPU (εύκαμπτο)</option><option value='1.01|0.11'>Nylon (PA12)</option><option value='1.15|0.18'>Nylon PA-CF</option></select>
       </label>
-      <label>Διαστάσεις σε mm (Μήκος, Πλάτος, Ύψος)
-        <span class='dims'><input type='number' id='xe' value='80' min='5' max='250' aria-label='Μήκος mm'><input type='number' id='ye' value='60' min='5' max='250' aria-label='Πλάτος mm'><input type='number' id='ze' value='40' min='5' max='250' aria-label='Ύψος mm'></span>
-      </label>
-      <label>Πλήρωση(εσωτερικό γέμισμα προϊόντος): <b id='ifve'>20%</b>
+      <div class='szh'>Διαστάσεις σε mm (μέγιστο 250 ανά πλευρά)</div>
+      <div class='dims'><label>Μήκος<input type='number' id='xe' value='80' min='5' max='250'></label><label>Πλάτος<input type='number' id='ye' value='60' min='5' max='250'></label><label>Ύψος<input type='number' id='ze' value='40' min='5' max='250'></label></div>
+      <p class='note' id='lim' role='status' style='margin:-6px 0 14px'></p>
+      <label>Πλήρωση: <b id='ifve'>20%</b>
         <input type='range' id='infe' min='5' max='100' value='20'>
       </label>
       <label>Ποσότητα
@@ -187,10 +205,10 @@ html:not([lang='el']) [lang='el']{display:none}
       <dl>
         <dt>Πλαστικό που καταναλώνεται</dt><dd id='ge'>–</dd>
         <dt>Χρόνος εκτύπωσης ανά τεμάχιο</dt><dd id='he'>–</dd>
-        <dt>Τέλος προετοιμασίας</dt><dd>€5,00</dd>
+        <dt>Τέλος προετοιμασίας</dt><dd>€9,00</dd>
       </dl>
-      <p style='margin:22px 0 0'><a class='btn' data-s='Προσφορά εκτύπωσης' href='mailto:info@mr3dprinter.eu'>Στείλτε μας το αρχείο σας</a></p>
-      <p class='note'>Ο υπολογισμός γίνεται στον περιηγητή σας. Τίποτα από όσα συμπληρώνετε εδώ δεν αποστέλλεται ή αποθηκεύεται. Αν μας στείλετε email, δείτε την <a href='#privacy-el'>ενημέρωση απορρήτου</a>.</p>
+      <p style='margin:22px 0 0;display:flex;flex-wrap:wrap;gap:10px'><a class='btn' id='maile' href='mailto:info@mr3dprinter.eu'>Στείλτε την εκτίμηση με email</a><button class='btn alt' id='copye' type='button' style='margin:0'>Αντιγραφή κειμένου</button></p>
+      <p class='note'>Ο υπολογισμός γίνεται στον περιηγητή σας. Τίποτα από όσα συμπληρώνετε εδώ δεν αποστέλλεται ή αποθηκεύεται. Το κουμπί ανοίγει την εφαρμογή email σας με τα στοιχεία συμπληρωμένα· θυμηθείτε να επισυνάψετε το αρχείο 3D. Αν μας στείλετε email, δείτε την <a href='#privacy-el'>ενημέρωση απορρήτου</a>.</p>
     </div>
   </div>
 </section>
@@ -267,10 +285,10 @@ html:not([lang='el']) [lang='el']{display:none}
     <div class="card">
       <dl>
         <dt>Email</dt><dd><a href="mailto:info@mr3dprinter.eu">info@mr3dprinter.eu</a></dd>
-        <dt>Phone</dt><dd><a href="tel:+30">+30</a></dd>
-        <dt>WhatsApp</dt><dd><a href="https://wa.me/30">+30 231 000 0000</a></dd>
+        <dt>Phone</dt><dd><a href="tel:+302310000000">+30 231 000 0000</a></dd>
+        <dt>WhatsApp</dt><dd><a href="https://wa.me/302310000000">+30 231 000 0000</a></dd>
         <dt>Workshop</dt><dd>Your street 12, Thessaloniki</dd>
-        <dt>Hours</dt><dd>Mon to Fri, 17:00 to 22:00</dd>
+        <dt>Hours</dt><dd>Mon to Fri, 09:00 to 18:00</dd>
         <dt>Pickup</dt><dd>By appointment</dd>
       </dl>
     </div>
@@ -294,10 +312,10 @@ html:not([lang='el']) [lang='el']{display:none}
     <div class='card'>
       <dl>
         <dt>Email</dt><dd><a href='mailto:info@mr3dprinter.eu'>info@mr3dprinter.eu</a></dd>
-        <dt>Τηλέφωνο</dt><dd><a href='tel:+302310000000'>+30</a></dd>
+        <dt>Τηλέφωνο</dt><dd><a href='tel:+302310000000'>+30 231 000 0000</a></dd>
         <dt>WhatsApp</dt><dd><a href='https://wa.me/302310000000'>+30 231 000 0000</a></dd>
-        <dt>Εργαστήριο</dt><dd>Οδός 12345, Θεσσαλονίκη</dd>
-        <dt>Ωράριο</dt><dd>Δευτέρα έως Παρασκευή, 17:00 έως 22:00</dd>
+        <dt>Εργαστήριο</dt><dd>Οδός Σας 12, Θεσσαλονίκη</dd>
+        <dt>Ωράριο</dt><dd>Δευτέρα έως Παρασκευή, 09:00 έως 18:00</dd>
         <dt>Παραλαβή</dt><dd>Κατόπιν ραντεβού</dd>
       </dl>
     </div>
@@ -315,7 +333,101 @@ html:not([lang='el']) [lang='el']{display:none}
 </section>
 
 <section id='legal' class='legal' lang='en'>
-  
+  <h2>Legal information</h2>
+  <p class='lead'>Legal notice, privacy notice, terms of sale and cookie notice. Last updated 16 October 2026. Highlighted fields are to be completed by the business.</p>
+
+  <article id='imprint'><h3>Legal notice</h3>
+    <p><mark>[Full legal name and legal form]</mark><br>Your street 12, Thessaloniki, Greece<br>Email: info@mr3dprinter.eu<br>Phone: +30 231 000 0000<br>VAT no.: <mark>[EL000000000]</mark><br>GEMI (business register) no.: <mark>[number]</mark></p>
+  </article>
+
+  <article id='privacy'><h3>Privacy notice</h3>
+    <h4>Who is responsible</h4>
+    <p>The controller under the GDPR (Regulation (EU) 2016/679) is <mark>[full legal name]</mark>, address above. For any privacy question, write to info@mr3dprinter.eu. We have not appointed a data protection officer because our processing is small in scale and not systematic monitoring.</p>
+    <h4>This website</h4>
+    <p>This site sets no cookies, uses no analytics or advertising tools, and loads no third-party fonts or scripts. The price estimator runs only in your browser. Our hosting provider briefly processes technical server logs (IP address, time, page requested) to deliver and secure the site (Art. 6(1)(f) GDPR, legitimate interest). Links to Instagram, Facebook, TikTok, YouTube and WhatsApp take you to other services with their own privacy policies.</p>
+    <h4>What we use your data for</h4>
+    <ul>
+      <li><b>Enquiries and quotes</b> (name, email, message, 3D files): to reply and prepare a quote. Basis: steps before a contract at your request, Art. 6(1)(b). Kept up to 6 months after our last contact if no order follows.</li>
+      <li><b>Orders and delivery</b> (name, billing and delivery address, email, phone, order details, 3D files): to make, ship and support your order. Basis: contract, Art. 6(1)(b). Files are deleted 30 days after delivery. Other order data is kept while needed for guarantee claims.</li>
+      <li><b>Invoices and accounts</b>: to meet tax and accounting law. Basis: legal obligation, Art. 6(1)(c). Kept for the period Greek law requires.</li>
+      <li><b>Claims and fraud prevention</b>: to defend or pursue legal claims. Basis: legitimate interest, Art. 6(1)(f).</li>
+    </ul>
+    <p>We do not send marketing or newsletters unless you separately agree (Art. 6(1)(a)), and you can withdraw that consent at any time. We do not use automated decision-making or profiling. We never sell your data.</p>
+    <h4>Who receives your data</h4>
+    <p>Only providers we need to run your order, such as couriers, payment providers, our accountant and our email provider. They act under a data processing agreement or as independent controllers, and authorities where the law requires it. We aim to keep data inside the EU/EEA. If a provider is outside it, we rely on an EU adequacy decision or standard contractual clauses.</p>
+    <h4>Your rights</h4>
+    <p>You can ask us for access to your data, correction, erasure, restriction, a portable copy, and you can object to processing based on legitimate interest. Email us and we answer within one month. You may also complain to the Hellenic Data Protection Authority (dpa.gr), Kifissias 1-3, 115 23 Athens, tel. +30 210 6475600, contact@dpa.gr, or to the authority in your own EU country.</p>
+    <p>You are not required to give us your data, but we cannot quote or fulfil an order without the details above.</p>
+  </article>
+
+  <article id='terms'><h3>Terms of sale</h3>
+    <h4>Orders</h4>
+    <p>We send a quote by email. The contract is formed when you accept it and we confirm your order by email. Prices for consumers include VAT. You pay after approving the final quote, and printing starts when payment arrives.</p>
+    <h4>Made to order and right of withdrawal</h4>
+    <p>Consumers in the EU normally have 14 days to withdraw from a distance contract without giving a reason. This does not apply to goods made to your specifications or clearly personalised (Art. 16(c) of Directive 2011/83/EU). Parts we print from your file are in this category, and we tell you so before you order. You can still cancel by email at no cost until we start printing.</p>
+    <p>If you buy a standard item that is not made to your specification, you have 14 days from receiving it to withdraw. You do not need to log in or give a reason. Use the button below or the link in the footer. We confirm receipt by email and refund within 14 days of your notice, and we may wait until we get the goods back or you show proof of sending. <a class='btn' style='margin-top:10px' href='mailto:info@mr3dprinter.eu?subject=Right%20of%20withdrawal&amp;body=Order%20number%3A%0AName%3A%0ADate%20of%20order%3A%0AI%20withdraw%20from%20my%20contract%20for%20the%20goods%20listed%20above.'>Withdraw from contract</a></p>
+    <h4>Faulty goods</h4>
+    <p>You have a legal guarantee of at least two years for goods that do not match the contract. We repair, replace or refund as the law provides. Our promise to reprint or refund a part that does not match your file is in addition to this, not instead of it.</p>
+    <h4>Your files and what we print</h4>
+    <p>You confirm you own the rights to your file or have permission to use it. We do not print firearms or firearm parts, items meant to cause harm, or anything unlawful or infringing, and we may refuse or cancel such orders. Visible layer lines and tolerance of about 0.2 mm are normal for 3D printing.</p>
+    <h4>Complaints and disputes</h4>
+    <p>Write to info@mr3dprinter.eu first. Greek law applies, but you keep the mandatory consumer protections of the country where you live. You may use an out-of-court dispute body, for example the Hellenic Consumer Ombudsman. We are <mark>[willing / not willing]</mark> to take part in such procedures. The EU online dispute resolution platform closed on 20 July 2025.</p>
+  </article>
+
+  <article id='cookies'><h3>Cookie notice</h3>
+    <p>This site does not store cookies or similar data on your device, so there is no cookie banner. If we later add analytics, maps or embedded videos, we will ask for your consent first, as Article 5(3) of the ePrivacy Directive requires.</p>
+  </article>
+</section>
+
+<section id='legal-el' class='legal' lang='el'>
+  <h2>Νομικές πληροφορίες</h2>
+  <p class='lead'>Νομική σημείωση, ενημέρωση απορρήτου, όροι πώλησης και πολιτική cookies. Τελευταία ενημέρωση 16 Οκτωβρίου 2026. Τα επισημασμένα πεδία συμπληρώνονται από την επιχείρηση.</p>
+
+  <article id='imprint-el'><h3>Νομική σημείωση</h3>
+    <p><mark>[Πλήρης επωνυμία και νομική μορφή]</mark><br>Οδός Σας 12, Θεσσαλονίκη, Ελλάδα<br>Email: info@mr3dprinter.eu<br>Τηλέφωνο: +30 231 000 0000<br>ΑΦΜ: <mark>[EL000000000]</mark><br>Αρ. ΓΕΜΗ: <mark>[αριθμός]</mark></p>
+  </article>
+
+  <article id='privacy-el'><h3>Ενημέρωση απορρήτου</h3>
+    <h4>Ποιος είναι υπεύθυνος</h4>
+    <p>Υπεύθυνος επεξεργασίας κατά τον ΓΚΠΔ (Κανονισμός (ΕΕ) 2016/679) είναι η <mark>[πλήρης επωνυμία]</mark>, με τη διεύθυνση που αναφέρεται παραπάνω. Για κάθε ερώτημα σχετικά με τα προσωπικά σας δεδομένα, γράψτε στο info@mr3dprinter.eu. Δεν έχουμε ορίσει υπεύθυνο προστασίας δεδομένων, επειδή η επεξεργασία μας είναι μικρής κλίμακας και δεν περιλαμβάνει συστηματική παρακολούθηση.</p>
+    <h4>Ο ιστότοπος</h4>
+    <p>Ο ιστότοπος δεν αποθηκεύει cookies, δεν χρησιμοποιεί εργαλεία ανάλυσης ή διαφήμισης και δεν φορτώνει γραμματοσειρές ή σενάρια τρίτων. Ο υπολογιστής κόστους λειτουργεί μόνο στον περιηγητή σας. Ο πάροχος φιλοξενίας επεξεργάζεται προσωρινά τεχνικά αρχεία καταγραφής (διεύθυνση IP, ώρα, σελίδα) για την παροχή και την ασφάλεια του ιστότοπου (άρθρο 6 παρ. 1 στοιχ. στ ΓΚΠΔ, έννομο συμφέρον). Οι σύνδεσμοι προς Instagram, Facebook, TikTok, YouTube και WhatsApp οδηγούν σε άλλες υπηρεσίες με τη δική τους πολιτική απορρήτου.</p>
+    <h4>Πώς χρησιμοποιούμε τα δεδομένα σας</h4>
+    <ul>
+      <li><b>Αιτήματα και προσφορές</b> (όνομα, email, μήνυμα, αρχεία 3D): για να απαντήσουμε και να ετοιμάσουμε προσφορά. Νομική βάση: μέτρα πριν από τη σύναψη σύμβασης κατόπιν αιτήματός σας, άρθρο 6 παρ. 1 στοιχ. β. Διατηρούνται έως 6 μήνες μετά την τελευταία επικοινωνία, αν δεν ακολουθήσει παραγγελία.</li>
+      <li><b>Παραγγελίες και παράδοση</b> (όνομα, διεύθυνση τιμολόγησης και παράδοσης, email, τηλέφωνο, στοιχεία παραγγελίας, αρχεία 3D): για την κατασκευή, αποστολή και υποστήριξη της παραγγελίας. Νομική βάση: εκτέλεση σύμβασης, άρθρο 6 παρ. 1 στοιχ. β. Τα αρχεία διαγράφονται 30 ημέρες μετά την παράδοση. Τα λοιπά στοιχεία παραγγελίας διατηρούνται όσο χρειάζονται για αξιώσεις εγγύησης.</li>
+      <li><b>Τιμολόγια και λογιστικά στοιχεία</b>: για συμμόρφωση με τη φορολογική και λογιστική νομοθεσία. Νομική βάση: έννομη υποχρέωση, άρθρο 6 παρ. 1 στοιχ. γ. Διατηρούνται για το χρονικό διάστημα που ορίζει η ελληνική νομοθεσία.</li>
+      <li><b>Νομικές αξιώσεις και πρόληψη απάτης</b>: για την υποστήριξη ή άσκηση νομικών αξιώσεων. Νομική βάση: έννομο συμφέρον, άρθρο 6 παρ. 1 στοιχ. στ.</li>
+    </ul>
+    <p>Δεν στέλνουμε διαφημιστικά μηνύματα ή ενημερωτικά δελτία, εκτός αν συναινέσετε ξεχωριστά (άρθρο 6 παρ. 1 στοιχ. α), και μπορείτε να ανακαλέσετε τη συναίνεσή σας οποιαδήποτε στιγμή. Δεν κάνουμε αυτοματοποιημένη λήψη αποφάσεων ή κατάρτιση προφίλ. Δεν πουλάμε ποτέ τα δεδομένα σας.</p>
+    <h4>Ποιοι λαμβάνουν τα δεδομένα σας</h4>
+    <p>Μόνο πάροχοι που χρειαζόμαστε για την εκτέλεση της παραγγελίας, όπως εταιρείες courier, πάροχοι πληρωμών, ο λογιστής μας και ο πάροχος email. Ενεργούν βάσει σύμβασης επεξεργασίας δεδομένων ή ως ανεξάρτητοι υπεύθυνοι επεξεργασίας, καθώς και αρχές όταν το απαιτεί ο νόμος. Στοχεύουμε να διατηρούμε τα δεδομένα εντός ΕΕ/ΕΟΧ. Αν κάποιος πάροχος βρίσκεται εκτός, βασιζόμαστε σε απόφαση επάρκειας της ΕΕ ή σε τυποποιημένες συμβατικές ρήτρες.</p>
+    <h4>Τα δικαιώματά σας</h4>
+    <p>Μπορείτε να ζητήσετε πρόσβαση στα δεδομένα σας, διόρθωση, διαγραφή, περιορισμό, φορητότητα και να αντιταχθείτε στην επεξεργασία που βασίζεται σε έννομο συμφέρον. Στείλτε μας email και απαντάμε εντός ενός μήνα. Μπορείτε επίσης να υποβάλετε καταγγελία στην Αρχή Προστασίας Δεδομένων Προσωπικού Χαρακτήρα (dpa.gr), Κηφισίας 1-3, 115 23 Αθήνα, τηλ. +30 210 6475600, contact@dpa.gr, ή στην αρχή της χώρας διαμονής σας στην ΕΕ.</p>
+    <p>Δεν υποχρεούστε να μας δώσετε τα δεδομένα σας, αλλά χωρίς τα παραπάνω στοιχεία δεν μπορούμε να δώσουμε προσφορά ή να εκτελέσουμε παραγγελία.</p>
+  </article>
+
+  <article id='terms-el'><h3>Όροι πώλησης</h3>
+    <h4>Παραγγελίες</h4>
+    <p>Σας στέλνουμε προσφορά με email. Η σύμβαση συνάπτεται όταν αποδεχτείτε την προσφορά και επιβεβαιώσουμε την παραγγελία με email. Οι τιμές για καταναλωτές περιλαμβάνουν ΦΠΑ. Πληρώνετε αφού εγκρίνετε την τελική προσφορά και η εκτύπωση ξεκινά μόλις γίνει η πληρωμή.</p>
+    <h4>Κατασκευή κατά παραγγελία και δικαίωμα υπαναχώρησης</h4>
+    <p>Οι καταναλωτές στην ΕΕ έχουν κατά κανόνα 14 ημέρες για να υπαναχωρήσουν από σύμβαση εξ αποστάσεως χωρίς να αναφέρουν λόγο. Αυτό δεν ισχύει για αγαθά που κατασκευάζονται σύμφωνα με τις προδιαγραφές σας ή είναι σαφώς προσωποποιημένα (άρθρο 16 στοιχ. γ της Οδηγίας 2011/83/ΕΕ). Τα τεμάχια που τυπώνουμε από το αρχείο σας ανήκουν σε αυτή την κατηγορία και σας το αναφέρουμε πριν παραγγείλετε. Μπορείτε πάντως να ακυρώσετε με email χωρίς κόστος μέχρι να ξεκινήσουμε την εκτύπωση.</p>
+    <p>Αν αγοράσετε στάνταρ προϊόν που δεν κατασκευάζεται με βάση τις προδιαγραφές σας, έχετε 14 ημέρες από την παραλαβή για να υπαναχωρήσετε. Δεν χρειάζεται σύνδεση ούτε αιτιολόγηση. Χρησιμοποιήστε το παρακάτω κουμπί ή τον σύνδεσμο στο υποσέλιδο. Επιβεβαιώνουμε την παραλαβή με email και επιστρέφουμε τα χρήματα εντός 14 ημερών από την ειδοποίησή σας, και μπορούμε να περιμένουμε μέχρι να παραλάβουμε τα προϊόντα ή να αποδείξετε ότι τα στείλατε. <a class='btn' style='margin-top:10px' data-s='Δικαίωμα υπαναχώρησης' data-b='Αριθμός παραγγελίας:
+Ονοματεπώνυμο:
+Ημερομηνία παραγγελίας:
+Υπαναχωρώ από τη σύμβασή μου για τα προϊόντα που αναφέρονται παραπάνω.' href='mailto:info@mr3dprinter.eu'>Υπαναχώρηση από τη σύμβαση</a></p>
+    <h4>Ελαττωματικά προϊόντα</h4>
+    <p>Έχετε νόμιμη εγγύηση τουλάχιστον δύο ετών για προϊόντα που δεν αντιστοιχούν στη σύμβαση. Επισκευάζουμε, αντικαθιστούμε ή επιστρέφουμε τα χρήματα όπως ορίζει ο νόμος. Η δέσμευσή μας να ξανατυπώσουμε ή να επιστρέψουμε τα χρήματα για τεμάχιο που δεν αντιστοιχεί στο αρχείο σας ισχύει επιπλέον και όχι αντί αυτής.</p>
+    <h4>Τα αρχεία σας και τι τυπώνουμε</h4>
+    <p>Βεβαιώνετε ότι διαθέτετε τα δικαιώματα του αρχείου σας ή έχετε άδεια χρήσης. Δεν τυπώνουμε πυροβόλα όπλα ή εξαρτήματά τους, αντικείμενα που προορίζονται να προκαλέσουν βλάβη ή οτιδήποτε παράνομο ή που παραβιάζει δικαιώματα τρίτων, και μπορούμε να αρνηθούμε ή να ακυρώσουμε τέτοιες παραγγελίες. Οι ορατές γραμμές στρώσεων και η ανοχή περίπου 0,2 mm είναι φυσιολογικές στην τρισδιάστατη εκτύπωση.</p>
+    <h4>Παράπονα και διαφορές</h4>
+    <p>Γράψτε πρώτα στο info@mr3dprinter.eu. Εφαρμόζεται το ελληνικό δίκαιο, αλλά διατηρείτε την αναγκαστικού δικαίου προστασία του καταναλωτή της χώρας διαμονής σας. Μπορείτε να προσφύγετε σε φορέα εξωδικαστικής επίλυσης διαφορών, για παράδειγμα στον Συνήγορο του Καταναλωτή. <mark>[Είμαστε πρόθυμοι / Δεν είμαστε πρόθυμοι]</mark> να συμμετάσχουμε σε τέτοιες διαδικασίες. Η ευρωπαϊκή πλατφόρμα επίλυσης διαφορών στο διαδίκτυο έκλεισε στις 20 Ιουλίου 2025.</p>
+  </article>
+
+  <article id='cookies-el'><h3>Πολιτική cookies</h3>
+    <p>Ο ιστότοπος δεν αποθηκεύει cookies ή παρόμοια δεδομένα στη συσκευή σας, επομένως δεν υπάρχει banner cookies. Αν αργότερα προσθέσουμε εργαλεία ανάλυσης, χάρτες ή ενσωματωμένα βίντεο, θα ζητήσουμε πρώτα τη συναίνεσή σας, όπως απαιτεί το άρθρο 5 παρ. 3 της Οδηγίας ePrivacy.</p>
+  </article>
+</section>
 </main>
 
 <footer lang="en">
@@ -329,71 +441,124 @@ html:not([lang='el']) [lang='el']{display:none}
 <footer lang="el">
   <div class='fcols'>
     <span>© 2026 Layerwork. Με επιφύλαξη παντός δικαιώματος.</span>
-    <span><a href='mailto:info@mr3dprinter.eu'>info@mr3dprinter.eu</a> · <a href='tel:+30'>+30</a></span>
+    <span><a href='mailto:info@mr3dprinter.eu'>info@mr3dprinter.eu</a> · <a href='tel:+302310000000'>+30 231 000 0000</a></span>
     <span><a href='https://instagram.com/layerwork' rel='noopener'>Instagram</a> · <a href='https://facebook.com/layerwork' rel='noopener'>Facebook</a></span>
   </div>
-  <!-- <nav class='fnav' aria-label='Νομικά'><a href='#imprint-el'>Νομική σημείωση</a><a href='#privacy-el'>Ενημέρωση απορρήτου</a><a href='#terms-el'>Όροι πώλησης</a><a href='#cookies-el'>Cookies</a><a data-s='Δικαίωμα υπαναχώρησης' data-b='Αριθμός παραγγελίας: -->
-<!-- Ονοματεπώνυμο: -->
-<!-- Ημερομηνία παραγγελίας: -->
-<!-- Υπαναχωρώ από τη σύμβασή μου για τα προϊόντα που αναφέρονται παραπάνω.' href='mailto:info@mr3dprinter.eu'>Υπαναχώρηση από τη σύμβαση</a></nav> -->
+  <nav class='fnav' aria-label='Νομικά'><a href='#imprint-el'>Νομική σημείωση</a><a href='#privacy-el'>Ενημέρωση απορρήτου</a><a href='#terms-el'>Όροι πώλησης</a><a href='#cookies-el'>Cookies</a><a data-s='Δικαίωμα υπαναχώρησης' data-b='Αριθμός παραγγελίας:
+Ονοματεπώνυμο:
+Ημερομηνία παραγγελίας:
+Υπαναχωρώ από τη σύμβασή μου για τα προϊόντα που αναφέρονται παραπάνω.' href='mailto:info@mr3dprinter.eu'>Υπαναχώρηση από τη σύμβαση</a></nav>
 </footer>
 </div>
 
 <script>
 (function(){
-  var cv=document.getElementById('c'),ctx=cv.getContext('2d'),lab=document.getElementById('lay');
-  var N=120,W=cv.width,H=cv.height,base=H-110,step=3.3;
+  var cv=document.getElementById('c'),ctx=cv.getContext('2d'),lab=document.getElementById('lay'),box=document.getElementById('shp');
+  var W=cv.width,H=cv.height,N=110,M=72,TILT=.55,SC=185,cT=Math.cos(TILT),sT=Math.sin(TILT),P=Math.PI;
   var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function css(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
-  function rad(i){var t=i/N;return 78+46*Math.sin(t*Math.PI*1.7+.4)+18*Math.sin(t*Math.PI*5)*.4}
-  function draw(p){
+  function rect(w,d){return function(a){return 1/Math.pow(Math.pow(Math.abs(Math.cos(a))/w,10)+Math.pow(Math.abs(Math.sin(a))/d,10),.1)}}
+  var S=[
+   {en:'Benchy',el:'Benchy',h:1.2,f:function(t){var z=t*1.2,L=[],k,HP=[],Q=[];if(z<.45){var fl=.8+.2*z/.45;for(k=0;k<=35;k++){var u=k/35,x=-.8+1.8*u,f=u<.55?1:Math.pow(Math.max(0,1-(u-.55)/.45),.7);if(u<.07)f*=Math.sqrt(.5+.5*u/.07);var y=.34*f*fl;HP.push(x,y);Q.push(x,-y)}for(k=35;k>=0;k--)HP.push(Q[2*k],Q[2*k+1]);L.push({p:HP})}else{if(z<.85)L.push({x:-.3,y:0,m:32,r:rect(.26,.2)});else if(z<.92)L.push({x:-.3,y:0,m:32,r:rect(.3,.24)});if(z>=.85)L.push({x:-.42,y:0,m:20,r:function(){return .07}})}return L}},
+   {en:'Mini bricks',el:'Μίνι τουβλάκια',h:.8,f:function(t){var c=Math.min(4,Math.floor(t*.8/.16)),o=c%2?.1:-.1,L=[],i,j;for(j=0;j<2;j++)for(i=0;i<4;i++)L.push({x:-.6+i*.4+o,y:-.12+j*.24,m:32,r:rect(.17,.1)});return L}},
+   {en:'Toy brick',el:'Τουβλάκι',h:.48,f:function(t){var L=[],i,j;if(t<=.8)L.push(rect(.62,.31));else for(i=0;i<4;i++)for(j=0;j<2;j++)L.push({x:-.465+i*.31,y:-.155+j*.31,m:24,r:function(){return .093}});return L}},
+   {en:'Standing star',el:'Όρθιο αστέρι',h:1.809,f:function(t){var zz=-.805+t*1.803,V=[],xs=[],L=[],i,p,q;for(i=0;i<10;i++){var R=i%2?.42:1,an=P/2+i*P/5;V.push([R*Math.cos(an),R*Math.sin(an)])}for(i=0;i<10;i++){p=V[i];q=V[(i+1)%10];if((p[1]<=zz&&q[1]>zz)||(q[1]<=zz&&p[1]>zz))xs.push(p[0]+(zz-p[1])/(q[1]-p[1])*(q[0]-p[0]))}xs.sort(function(a,b){return a-b});for(i=0;i+1<xs.length;i+=2)L.push({x:(xs[i]+xs[i+1])/2,y:0,r:rect(Math.max(.015,(xs[i+1]-xs[i])/2),.2)});return L}},
+   {en:'Twisted vase',el:'Στριφτό βάζο',h:1.3,f:function(t){var b=.55+.26*Math.sin(t*3+.3);return[function(a){return b*(1+.15*Math.cos(5*a+t*7))}]}},
+   {en:'Mushroom',el:'Μανιτάρι',h:1.1,f:function(t){var u=Math.max(0,(t-.45)/.55),c=.95*Math.sqrt(Math.max(0,1-u*u))*Math.min(1,.21+u*5),r=Math.max(.2,t<.45?.2:c);return[function(){return r}]}},
+   {en:'Cog',el:'Γρανάζι',h:.35,f:function(){return[function(a){return .8+.15*Math.tanh(4*Math.sin(14*a))},function(){return .28}]}}
+  ];
+  var cur=0,pts=[],btn=[],auto=true,start=null;
+  function build(k){
+    var s=S[k];pts=[];
+    for(var i=0;i<N;i++){
+      var t=i/(N-1),fs=s.f(t),L=[];
+      for(var j=0;j<fs.length;j++){var F=fs[j],A=[];if(F.p){A=F.p}else{var ox=F.x||0,oy=F.y||0,fn=F.r||F,K=F.m||M;for(var m=0;m<K;m++){var a=m/K*2*P,r=fn(a);A.push(ox+r*Math.cos(a),oy+r*Math.sin(a))}}L.push(A)}
+      pts.push(L);
+    }
+    for(var b=0;b<btn.length;b++)btn[b].setAttribute('aria-pressed',b===k?'true':'false');
+  }
+  function draw(p,yaw){
     ctx.clearRect(0,0,W,H);
-    var cx=W/2,line=css('--line'),blue=css('--blue'),yel='#f2c230';
-    ctx.strokeStyle=line;ctx.lineWidth=2;
-    ctx.beginPath();ctx.ellipse(cx,base+14,220,60,0,0,7);ctx.stroke();
-    var n=Math.floor(p*N);
+    var s=S[cur],c=Math.cos(yaw),sn=Math.sin(yaw),cy=H/2+s.h*SC*cT/2+10,
+        surf=css('--surface'),line=css('--line'),blue=css('--blue'),ink=css('--ink');
+    ctx.strokeStyle=line;ctx.lineWidth=2;ctx.globalAlpha=1;
+    ctx.beginPath();ctx.ellipse(W/2,cy+6,1.2*SC,1.2*SC*sT,0,0,7);ctx.stroke();
+    var n=Math.min(N-1,Math.floor(p*N));
     for(var i=0;i<=n;i++){
-      var r=rad(i),y=base-i*step;
-      ctx.strokeStyle=blue;ctx.globalAlpha=.55+.45*(i/N);ctx.lineWidth=3.2;
-      ctx.beginPath();ctx.ellipse(cx,y,r,r*.28,0,0,7);ctx.stroke();
+      var zz=cy-(i/(N-1))*s.h*SC*cT;
+      for(var j=0;j<pts[i].length;j++){
+        var A=pts[i][j];ctx.beginPath();
+        for(var m=0,K=A.length/2;m<K;m++){
+          var x=A[2*m],y=A[2*m+1],X=W/2+(x*c-y*sn)*SC,Y=zz+(x*sn+y*c)*SC*sT;
+          if(m)ctx.lineTo(X,Y);else ctx.moveTo(X,Y);
+        }
+        ctx.closePath();
+        ctx.globalAlpha=1;ctx.fillStyle=surf;ctx.fill();
+        ctx.globalAlpha=.55+.45*i/N;ctx.strokeStyle=blue;ctx.lineWidth=2.2;ctx.stroke();
+      }
     }
     ctx.globalAlpha=1;
-    if(n<N){
-      var r2=rad(n),y2=base-n*step,a=p*60,nx=cx+Math.cos(a)*r2,ny=y2+Math.sin(a)*r2*.28;
-      ctx.strokeStyle=css('--ink');ctx.lineWidth=2;
+    if(p<1){
+      var zn=cy-(n/(N-1))*s.h*SC*cT,Lp=pts[n],A0=Lp[Math.floor(((p*5)%1)*Lp.length)],mm=Math.floor(((p*9)%1)*A0.length/2),
+          x0=A0[2*mm],y0=A0[2*mm+1],nx=W/2+(x0*c-y0*sn)*SC,ny=zn+(x0*sn+y0*c)*SC*sT;
+      ctx.strokeStyle=ink;ctx.lineWidth=2;
       ctx.beginPath();ctx.moveTo(nx,ny-150);ctx.lineTo(nx,ny-22);ctx.stroke();
-      ctx.fillStyle=yel;ctx.beginPath();ctx.moveTo(nx-12,ny-22);ctx.lineTo(nx+12,ny-22);ctx.lineTo(nx,ny);ctx.closePath();ctx.fill();
+      ctx.fillStyle='#f2c230';ctx.beginPath();ctx.moveTo(nx-12,ny-22);ctx.lineTo(nx+12,ny-22);ctx.lineTo(nx,ny);ctx.closePath();ctx.fill();
     }
-    lab.textContent=(document.documentElement.lang==='el'?'Στρώση ':'Layer ')+Math.min(n,N)+' / '+N;
+    lab.textContent=(document.documentElement.lang==='el'?'Στρώση ':'Layer ')+(p<1?n+1:N)+' / '+N;
   }
-  if(reduce){draw(1);return}
-  var t0=null;
+  function show(k){cur=k;build(k);if(reduce)draw(1,.6);else start=null}
+  S.forEach(function(s,k){
+    var b=document.createElement('button');b.type='button';b.className='chip';
+    b.innerHTML='<span lang="en">'+s.en+'</span><span lang="el">'+s.el+'</span>';
+    b.addEventListener('click',function(){auto=false;show(k)});
+    box.appendChild(b);btn.push(b);
+  });
+  build(0);
+  if(reduce){draw(1,.6);return}
   function tick(ts){
-    if(!t0)t0=ts;
-    var s=((ts-t0)/1000)%12,p=s<9?s/9:1;
-    draw(p);requestAnimationFrame(tick);
+    if(start===null)start=ts;
+    var e=(ts-start)/1000,p=e<4?e/4:1;
+    if(e>6.5){if(auto){cur=(cur+1)%S.length;build(cur)}start=ts;p=0}
+    draw(p,ts/1000*.45);requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
 })();
 
 function initCalc(s,el){
+  var mailBody='',mailSubj='';
   function $(i){return document.getElementById(i+s)}
   function calc(){
     var m=$('mat').value.split('|'),dens=+m[0],rate=+m[1];
-    var x=Math.max(+$('x').value||0,0),y=Math.max(+$('y').value||0,0),z=Math.max(+$('z').value||0,0);
+    var x=Math.min(Math.max(+$('x').value||0,0),250),y=Math.min(Math.max(+$('y').value||0,0),250),z=Math.min(Math.max(+$('z').value||0,0),250);
+    var big=false;['x','y','z'].forEach(function(k){if(+$(k).value>250){$(k).value=250;big=true}});
+    $('lim').textContent=big?(el?'Το μέγιστο μέγεθος είναι 250 mm ανά πλευρά. Μεγαλύτερα τεμάχια μπορούν να χωριστούν και να κολληθούν, ρωτήστε μας.':'The maximum size is 250 mm per side. Bigger parts can be split and glued, just ask us.'):'';
     var inf=+$('inf').value,q=Math.max(+$('qty').value||1,1);
     $('ifv').textContent=inf+'%';
     var vol=x*y*z/1000*0.35;
     var g=vol*dens*(0.3+0.7*inf/100);
     var hrs=g/14;
     var each=g*rate+hrs*1.2;
-    var total=5+each*q*(q>9?0.9:1);
+    var total=9+each*q*(q>9?0.9:1);
     $('p').textContent='€'+(el?total.toFixed(2).replace('.',','):total.toFixed(2));
     $('g').textContent=Math.round(g)+' g';
     $('h').textContent=hrs<1?Math.round(hrs*60)+(el?' λεπτά':' min'):hrs.toFixed(1)+(el?' ώρες':' h');
+    var sel=$('mat'),mn=sel.options[sel.selectedIndex].text,ps=$('p').textContent,gs=$('g').textContent,hs=$('h').textContent;
+    var L=el?['Γεια σας Layerwork,','','Θα ήθελα προσφορά για εκτύπωση 3D. Τα στοιχεία μου είναι τα παρακάτω.','','ΔΙΑΣΤΑΣΕΙΣ ΤΕΜΑΧΙΟΥ','  Μήκος: '+x+' mm','  Πλάτος: '+y+' mm','  Ύψος: '+z+' mm','','ΡΥΘΜΙΣΕΙΣ ΕΚΤΥΠΩΣΗΣ','  Υλικό: '+mn,'  Πλήρωση: '+inf+'%','  Ποσότητα: '+q,'','ΕΚΤΙΜΗΣΗ ΑΠΟ ΤΟΝ ΙΣΤΟΤΟΠΟ ΣΑΣ','  Πλαστικό: '+gs,'  Χρόνος εκτύπωσης ανά τεμάχιο: '+hs,'  Εκτιμώμενο σύνολο: '+ps+' (ενδεικτικά)','','ΤΑ ΣΤΟΙΧΕΙΑ ΜΟΥ','  Ονοματεπώνυμο:','  Τηλέφωνο (προαιρετικά):','  Πόλη / χώρα παράδοσης:','  Επιθυμητή ημερομηνία:','','Επισυνάπτω το αρχείο 3D (STL, 3MF, STEP ή OBJ).','','Ευχαριστώ,']
+    :['Hello Layerwork,','','I would like a quote for a 3D print. My details are below.','','PART SIZE','  Length: '+x+' mm','  Width: '+y+' mm','  Height: '+z+' mm','','PRINT SETTINGS','  Material: '+mn,'  Infill: '+inf+'%','  Quantity: '+q,'','ESTIMATE FROM YOUR WEBSITE','  Plastic used: '+gs,'  Print time per part: '+hs,'  Estimated total: '+ps+' (rough guide)','','MY DETAILS','  Name:','  Phone (optional):','  Delivery city / country:','  Deadline:','','My 3D file is attached (STL, 3MF, STEP or OBJ).','','Thank you,'];
+    mailSubj=(el?'Αίτημα προσφοράς εκτύπωσης – ':'Print quote request – ')+mn+', '+x+' × '+y+' × '+z+' mm';
+    mailBody=L.join('\r\n');
+    $('mail').href='mailto:info@mr3dprinter.eu?subject='+encodeURIComponent(mailSubj)+'&body='+encodeURIComponent(mailBody);
   }
   ['mat','x','y','z','inf','qty'].forEach(function(i){$(i).addEventListener('input',calc)});
   calc();
+  var cb=$('copy');
+  cb.addEventListener('click',function(){
+    var txt=mailSubj+'\r\n\r\n'+mailBody;
+    function done(){var o=cb.textContent;cb.textContent=el?'Αντιγράφηκε!':'Copied!';setTimeout(function(){cb.textContent=o},1800)}
+    function fb(){var t=document.createElement('textarea');t.value=txt;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(e){}document.body.removeChild(t);done()}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,fb)}else fb();
+  });
 }
 initCalc('',false);initCalc('e',true);
 (function(){
