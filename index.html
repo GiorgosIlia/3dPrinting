@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Layerwork – 3D printing, made to order</title>
+<style>
+:root{--bg:#eef1f4;--surface:#fff;--ink:#14202b;--muted:#516070;--line:#cfd7de;--blue:#2f5bea;--yellow:#f2c230;--onblue:#fff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1720;--surface:#17222d;--ink:#e8eef4;--muted:#9aabbb;--line:#2a3948;--blue:#7c9bff;--onblue:#0f1720}}
+:root[data-theme="dark"]{--bg:#0f1720;--surface:#17222d;--ink:#e8eef4;--muted:#9aabbb;--line:#2a3948;--blue:#7c9bff;--onblue:#0f1720}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 "IBM Plex Sans",system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque",system-ui,sans-serif;line-height:1.05;margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+.logo{font:800 22px "Bricolage Grotesque",sans-serif;text-decoration:none}
+.logo i{display:inline-block;width:18px;height:18px;margin-right:8px;vertical-align:-2px;background:repeating-linear-gradient(var(--blue) 0 3px,transparent 3px 5px)}
+nav a{margin-left:20px;text-decoration:none;color:var(--muted);font-weight:500}
+nav a:hover{color:var(--ink)}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:center;padding:36px 0 64px}
+.hero h1{font-size:clamp(40px,6.5vw,78px);font-weight:800;letter-spacing:-.03em}
+.hero p{max-width:46ch;color:var(--muted);font-size:18px;margin:20px 0 28px}
+.btn{display:inline-block;background:var(--blue);color:var(--onblue);padding:14px 22px;border-radius:6px;font-weight:500;text-decoration:none;border:0;font-size:16px;cursor:pointer;font-family:inherit}
+.btn.alt{background:transparent;color:var(--ink);border:1.5px solid var(--ink);margin-left:8px}
+.plate{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px}
+canvas{width:100%;height:auto;display:block}
+.status{display:flex;justify-content:space-between;font-size:14px;color:var(--muted);padding:6px 4px 0}
+section{padding:56px 0;border-top:1px solid var(--line)}
+section h2{font-size:clamp(28px,4vw,44px);font-weight:700;letter-spacing:-.02em;margin-bottom:12px}
+.lead{color:var(--muted);max-width:58ch;margin:0 0 28px}
+.tbl{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:620px}
+th,td{text-align:left;padding:14px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:"Bricolage Grotesque",sans-serif;font-weight:700}
+tr:last-child td{border-bottom:0}
+.sw{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:8px}
+.quote{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:24px}
+label{display:block;font-weight:500;margin:0 0 14px;font-size:15px}
+select,input[type=number]{width:100%;margin-top:6px;padding:10px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);font:inherit}
+.dims{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+input[type=range]{width:100%;accent-color:var(--blue)}
+.price{font:800 56px "Bricolage Grotesque",sans-serif;letter-spacing:-.03em}
+.price small{font:400 15px "IBM Plex Sans",sans-serif;color:var(--muted);letter-spacing:0}
+dl{display:grid;grid-template-columns:1fr auto;gap:8px 16px;margin:18px 0 0}
+dt{color:var(--muted)}dd{margin:0;font-weight:500;text-align:right}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;counter-reset:s}
+.steps li{counter-increment:s;border-top:4px solid var(--yellow);padding-top:14px}
+.steps li::before{content:counter(s);font:700 15px "Bricolage Grotesque",sans-serif;color:var(--muted)}
+.steps h3{font-size:22px;margin:4px 0 6px}
+.steps p{margin:0;color:var(--muted);font-size:15px}
+footer{padding:40px 0 56px;border-top:1px solid var(--line);color:var(--muted)}
+footer a{font-weight:500;color:var(--ink)}
+.specs{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:0 0 8px}
+.specs div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+.specs b{display:block;font:700 22px "Bricolage Grotesque",sans-serif}
+.specs span{color:var(--muted);font-size:14px}
+details{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 20px;margin-bottom:10px}
+summary{cursor:pointer;font-weight:500}
+details p{margin:10px 0 0;color:var(--muted)}
+.contact{display:grid;grid-template-columns:1.1fr .9fr;gap:28px}
+.contact dl{margin:0}
+.contact dd a{text-decoration:none;border-bottom:1.5px solid var(--yellow)}
+.social{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.social a{padding:10px 16px;border:1.5px solid var(--ink);border-radius:999px;text-decoration:none;font-weight:500}
+.social a:hover{background:var(--ink);color:var(--bg)}
+.fcols{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px}
+.fnav{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:20px}.fnav a{color:var(--muted)}
+mark{background:var(--yellow);color:#14202b;padding:0 4px;border-radius:3px}
+.note{font-size:13px;color:var(--muted);margin:14px 0 0}
+html[lang='el'] [lang='en']{display:none}
+html:not([lang='el']) [lang='el']{display:none}
+.hr{display:flex;align-items:center;gap:8px}
+.lang{font:500 14px inherit;font-family:inherit;background:transparent;color:var(--ink);border:1.5px solid var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer;margin-left:16px}
+.lang:hover{background:var(--ink);color:var(--bg)}
+.legal article{margin:0 0 44px;max-width:72ch}.legal h3{font-size:28px;margin:0 0 6px}
+.legal h4{font:700 17px "Bricolage Grotesque",system-ui,sans-serif;margin:20px 0 4px}
+.legal p,.legal li{color:var(--muted);margin:6px 0}.legal ul{padding-left:20px;margin:6px 0}
+@media (max-width:820px){.hero,.quote,.contact{grid-template-columns:1fr}.steps,.specs{grid-template-columns:1fr 1fr}nav a:not(:last-child){display:none}}
+@media (max-width:480px){.steps,.specs{grid-template-columns:1fr}.btn.alt{margin:10px 0 0}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a class="logo" href="#top"><i></i>Layerwork</a>
+  <div class="hr"><nav lang="en"><a href="#materials">Materials</a><a href="#process">How it works</a><a href="#faq">FAQ</a><a href="#contact">Contact</a></nav><nav lang="el"><a href="#materials-el">Υλικά</a><a href="#process-el">Πώς λειτουργεί</a><a href="#faq-el">Ερωτήσεις</a><a href="#contact-el">Επικοινωνία</a></nav><button class="lang" id="lg" type="button">Ελληνικά</button></div>
+</header>
+
+<main id="top">
+<div class="hero">
+  <div lang="en">
+    <h1>Your design, printed one layer at a time.</h1>
+    <p>Send us an STL or STEP file. We print prototypes, spare parts and small runs in PLA, PETG, ASA and resin, and ship in 2 to 5 working days.</p>
+    <a class="btn" href="#quote">Estimate your print</a><a class="btn alt" href="#materials">See materials</a>
+  </div>
+  <div lang="el">
+    <h1>Το σχέδιό σας, τυπωμένο στρώση προς στρώση.</h1>
+    <p>Στείλτε μας ένα αρχείο STL ή STEP. Τυπώνουμε πρωτότυπα, ανταλλακτικά και μικρές παρτίδες σε PLA, PETG, ASA και ρητίνη, και αποστέλλουμε σε 2 έως 5 εργάσιμες.</p>
+    <a class="btn" href="#quote-el">Υπολογίστε το κόστος</a><a class="btn alt" href="#materials-el">Δείτε τα υλικά</a>
+  </div>
+  <div class="plate" aria-label="3D print animation">
+    <canvas id="c" width="560" height="560"></canvas>
+    <div class="status"><span id="lay">Layer 0 / 120</span><span><span lang="en">0.2 mm layers · PETG</span><span lang="el">στρώσεις 0,2 mm · PETG</span></span></div>
+  </div>
+</div>
+
+<section id="materials" lang="en">
+  <h2>Pick the right plastic</h2>
+  <p class="lead">Not sure? Choose PLA for looks, PETG for parts that get used, ASA for the outdoors.</p>
+  <div class="tbl"><table>
+    <tr><th>Material</th><th>Best for</th><th>Strength</th><th>Heat limit</th><th>Price</th></tr>
+    <tr><td><span class="sw" style="background:#2f5bea"></span>PLA</td><td>Models, display pieces, fit checks</td><td>Medium, stiff</td><td>55 °C</td><td>from €0.04 / g</td></tr>
+    <tr><td><span class="sw" style="background:#f2c230"></span>PETG</td><td>Brackets, enclosures, water contact</td><td>High, a little flexible</td><td>75 °C</td><td>from €0.05 / g</td></tr>
+    <tr><td><span class="sw" style="background:#8a96a3"></span>ASA</td><td>Outdoor parts, car interiors</td><td>High, UV stable</td><td>95 °C</td><td>from €0.07 / g</td></tr>
+    <tr><td><span class="sw" style="background:#3bb58a"></span>Resin</td><td>Fine detail, small figures, jewelry masters</td><td>Brittle, very smooth</td><td>60 °C</td><td>from €0.18 / ml</td></tr>
+  </table></div>
+</section>
+
+<section id='materials-el' lang='el'>
+  <h2>Διαλέξτε το σωστό πλαστικό</h2>
+  <p class='lead'>Δεν είστε σίγουροι; PLA για εμφάνιση, PETG για εξαρτήματα που χρησιμοποιούνται, ASA για εξωτερικούς χώρους.</p>
+  <div class='tbl'><table>
+    <tr><th>Υλικό</th><th>Ιδανικό για</th><th>Αντοχή</th><th>Όριο θερμοκρασίας</th><th>Τιμή</th></tr>
+    <tr><td><span class='sw' style='background:#2f5bea'></span>PLA</td><td>Μακέτες, αντικείμενα επίδειξης, δοκιμές εφαρμογής</td><td>Μέτρια, άκαμπτο</td><td>55 °C</td><td>από €0,04 / g</td></tr>
+    <tr><td><span class='sw' style='background:#f2c230'></span>PETG</td><td>Βάσεις, περιβλήματα, επαφή με νερό</td><td>Υψηλή, ελαφρώς εύκαμπτο</td><td>75 °C</td><td>από €0,05 / g</td></tr>
+    <tr><td><span class='sw' style='background:#8a96a3'></span>ASA</td><td>Εξωτερικά εξαρτήματα, εσωτερικά αυτοκινήτων</td><td>Υψηλή, ανθεκτικό στην UV</td><td>95 °C</td><td>από €0,07 / g</td></tr>
+    <tr><td><span class='sw' style='background:#3bb58a'></span>Ρητίνη</td><td>Λεπτομέρεια, μικρά ειδώλια, πρότυπα κοσμημάτων</td><td>Εύθραυστη, πολύ λεία</td><td>60 °C</td><td>από €0,18 / ml</td></tr>
+  </table></div>
+</section>
+
+<section id="quote" lang="en">
+  <h2>Estimate your print</h2>
+  <p class="lead">Enter the size of your part's bounding box. This is a rough guide; we confirm the exact price once we see your file.</p>
+  <div class="quote">
+    <div class="card">
+      <label>Material
+        <select id="mat"><option value="1.24|0.04">PLA</option><option value="1.27|0.05" selected>PETG</option><option value="1.07|0.07">ASA</option></select>
+      </label>
+      <label>Size in mm (Length, Width, Height)
+        <span class="dims"><input type="number" id="x" value="80" min="5" max="250" aria-label="Length mm"><input type="number" id="y" value="60" min="5" max="250" aria-label="Width mm"><input type="number" id="z" value="40" min="5" max="250" aria-label="Height mm"></span>
+      </label>
+      <label>Infill: <b id="ifv">20%</b>
+        <input type="range" id="inf" min="5" max="100" value="20">
+      </label>
+      <label>Quantity
+        <input type="number" id="qty" value="1" min="1" max="500">
+      </label>
+    </div>
+    <div class="card" aria-live="polite">
+      <div class="price"><span id="p">€0</span> <small>estimated total</small></div>
+      <dl>
+        <dt>Plastic used</dt><dd id="g">–</dd>
+        <dt>Print time per part</dt><dd id="h">–</dd>
+        <dt>Setup fee</dt><dd>€5.00</dd>
+      </dl>
+      <p style="margin:22px 0 0"><a class="btn" href="mailto:hello@layerwork.example?subject=Print%20quote">Send us your file</a></p>
+      <p class="note">This estimate is calculated in your browser. Nothing you enter here is sent or stored. If you email us, see our <a href="#privacy">privacy notice</a>.</p>
+    </div>
+  </div>
+</section>
+
+<section id='quote-el' lang='el'>
+  <h2>Υπολογίστε το κόστος</h2>
+  <p class='lead'>Συμπληρώστε τις διαστάσεις του τεμαχίου σας. Πρόκειται για ενδεικτική τιμή· την οριστική τιμή την επιβεβαιώνουμε όταν δούμε το αρχείο σας.</p>
+  <div class='quote'>
+    <div class='card'>
+      <label>Υλικό
+        <select id='mate'><option value='1.24|0.04'>PLA</option><option value='1.27|0.05' selected>PETG</option><option value='1.07|0.07'>ASA</option></select>
+      </label>
+      <label>Διαστάσεις σε mm (Μήκος, Πλάτος, Ύψος)
+        <span class='dims'><input type='number' id='xe' value='80' min='5' max='250' aria-label='Μήκος mm'><input type='number' id='ye' value='60' min='5' max='250' aria-label='Πλάτος mm'><input type='number' id='ze' value='40' min='5' max='250' aria-label='Ύψος mm'></span>
+      </label>
+      <label>Πλήρωση(εσωτερικό γέμισμα προϊόντος): <b id='ifve'>20%</b>
+        <input type='range' id='infe' min='5' max='100' value='20'>
+      </label>
+      <label>Ποσότητα
+        <input type='number' id='qtye' value='1' min='1' max='500'>
+      </label>
+    </div>
+    <div class='card' aria-live='polite'>
+      <div class='price'><span id='pe'>€0</span> <small>εκτιμώμενο σύνολο</small></div>
+      <dl>
+        <dt>Πλαστικό που καταναλώνεται</dt><dd id='ge'>–</dd>
+        <dt>Χρόνος εκτύπωσης ανά τεμάχιο</dt><dd id='he'>–</dd>
+        <dt>Τέλος προετοιμασίας</dt><dd>€5,00</dd>
+      </dl>
+      <p style='margin:22px 0 0'><a class='btn' data-s='Προσφορά εκτύπωσης' href='mailto:hello@layerwork.example'>Στείλτε μας το αρχείο σας</a></p>
+      <p class='note'>Ο υπολογισμός γίνεται στον περιηγητή σας. Τίποτα από όσα συμπληρώνετε εδώ δεν αποστέλλεται ή αποθηκεύεται. Αν μας στείλετε email, δείτε την <a href='#privacy-el'>ενημέρωση απορρήτου</a>.</p>
+    </div>
+  </div>
+</section>
+
+<section id="process" lang="en">
+  <h2>From file to doorstep</h2>
+  <p class="lead">Four steps, and you only do the first one.</p>
+  <ol class="steps">
+    <li><h3>Upload</h3><p>Send an STL, 3MF or STEP file by email.</p></li>
+    <li><h3>Check</h3><p>We inspect the model and reply with a final price within a day.</p></li>
+    <li><h3>Print</h3><p>Your part is printed, cleaned and checked against your dimensions.</p></li>
+    <li><h3>Ship</h3><p>Packed and sent with tracking. Local pickup is free.</p></li>
+  </ol>
+</section>
+<section id='process-el' lang='el'>
+  <h2>Από το αρχείο στην πόρτα σας</h2>
+  <p class='lead'>Τέσσερα βήματα, και εσείς κάνετε μόνο το πρώτο.</p>
+  <ol class='steps'>
+    <li><h3>Αρχείο</h3><p>Στείλτε μας αρχείο STL, 3MF ή STEP με email.</p></li>
+    <li><h3>Έλεγχος</h3><p>Ελέγχουμε το μοντέλο και απαντάμε με την τελική τιμή μέσα σε μία ημέρα.</p></li>
+    <li><h3>Εκτύπωση</h3><p>Το τεμάχιο τυπώνεται, καθαρίζεται και ελέγχεται με βάση τις διαστάσεις σας.</p></li>
+    <li><h3>Παράδοση</h3><p>Συσκευάζεται και αποστέλλεται με αριθμό παρακολούθησης. Η παραλαβή από το εργαστήριο είναι δωρεάν.</p></li>
+  </ol>
+</section>
+
+<section id="files" lang="en">
+  <h2>Before you send a file</h2>
+  <p class="lead">A few limits that help your part print right the first time.</p>
+  <div class="specs">
+    <div><b>250 mm</b><span>Largest part in each direction. Bigger parts can be split and glued.</span></div>
+    <div><b>±0.2 mm</b><span>Typical accuracy. Tell us if a fit is critical.</span></div>
+    <div><b>1.2 mm</b><span>Thinnest wall we recommend for plastic parts.</span></div>
+    <div><b>STL, 3MF, STEP, OBJ</b><span>File types we accept.</span></div>
+  </div>
+</section>
+
+<section id='files-el' lang='el'>
+  <h2>Πριν στείλετε αρχείο</h2>
+  <p class='lead'>Μερικά όρια που βοηθούν το τεμάχιο να τυπωθεί σωστά με την πρώτη.</p>
+  <div class='specs'>
+    <div><b>250 mm</b><span>Το μεγαλύτερο τεμάχιο σε κάθε διάσταση. Τα μεγαλύτερα μπορούν να χωριστούν και να κολληθούν.</span></div>
+    <div><b>±0,2 mm</b><span>Τυπική ακρίβεια. Πείτε μας αν μια εφαρμογή είναι κρίσιμη.</span></div>
+    <div><b>1,2 mm</b><span>Το λεπτότερο τοίχωμα που προτείνουμε για πλαστικά τεμάχια.</span></div>
+    <div><b>STL, 3MF, STEP, OBJ</b><span>Τύποι αρχείων που δεχόμαστε.</span></div>
+  </div>
+</section>
+
+<section id="faq" lang="en">
+  <h2>Common questions</h2>
+  <details><summary>How long does an order take?</summary><p>Most orders ship within 2 to 5 working days. Large parts or runs of 50 or more can take longer, and we tell you before we start.</p></details>
+  <details><summary>I don't have a 3D model. Can you help?</summary><p>Yes. Send a sketch, photos or measurements and we can model the part for you. Design work is priced per hour after we see the job.</p></details>
+  <details><summary>Do you ship abroad?</summary><p>Yes, within the EU in 3 to 7 working days. Shipping is calculated from weight and destination. Local pickup is free.</p></details>
+  <details><summary>Can I cancel or return a custom print?</summary><p>You can cancel for free until we start printing. Parts made to your file are excluded from the 14-day withdrawal right under EU law, but our legal guarantee still covers faulty parts. Details in our <a href="#terms">terms of sale</a>.</p></details>
+  <details><summary>How do I pay?</summary><p>Bank transfer or card link after you approve the final quote. Orders start once payment arrives.</p></details>
+  <details><summary>What if my part comes out wrong?</summary><p>If the print doesn't match your file, we reprint it or refund it. Photos within 7 days of delivery are enough.</p></details>
+  <details><summary>Is my file kept private?</summary><p>Yes. We use your files only to print your order, never share them, and delete them 30 days after delivery. See our <a href="#privacy">privacy notice</a>.</p></details>
+</section>
+
+<section id='faq-el' lang='el'>
+  <h2>Συχνές ερωτήσεις</h2>
+  <details><summary>Πόσο διαρκεί μια παραγγελία;</summary><p>Οι περισσότερες παραγγελίες αποστέλλονται σε 2 έως 5 εργάσιμες. Μεγάλα τεμάχια ή παρτίδες 50 τεμαχίων και άνω μπορεί να χρειαστούν περισσότερο, και σας ενημερώνουμε πριν ξεκινήσουμε.</p></details>
+  <details><summary>Δεν έχω τρισδιάστατο μοντέλο. Μπορείτε να βοηθήσετε;</summary><p>Ναι. Στείλτε σκίτσο, φωτογραφίες ή διαστάσεις και μπορούμε να σχεδιάσουμε το τεμάχιο για εσάς. Η σχεδίαση χρεώνεται ανά ώρα αφού δούμε τη δουλειά.</p></details>
+  <details><summary>Στέλνετε στο εξωτερικό;</summary><p>Ναι, εντός ΕΕ σε 3 έως 7 εργάσιμες. Τα μεταφορικά υπολογίζονται με βάση το βάρος και τον προορισμό. Η παραλαβή από το εργαστήριο είναι δωρεάν.</p></details>
+  <details><summary>Μπορώ να ακυρώσω ή να επιστρέψω μια εκτύπωση κατά παραγγελία;</summary><p>Μπορείτε να ακυρώσετε δωρεάν μέχρι να ξεκινήσουμε την εκτύπωση. Τα τεμάχια που κατασκευάζονται με βάση το δικό σας αρχείο εξαιρούνται από το δικαίωμα υπαναχώρησης 14 ημερών, αλλά η νόμιμη εγγύηση καλύπτει τα ελαττωματικά τεμάχια. Δείτε τους <a href='#terms-el'>όρους πώλησης</a>.</p></details>
+  <details><summary>Πώς πληρώνω;</summary><p>Με τραπεζική κατάθεση ή σύνδεσμο πληρωμής με κάρτα, αφού εγκρίνετε την τελική προσφορά. Η παραγγελία ξεκινά μόλις γίνει η πληρωμή.</p></details>
+  <details><summary>Τι γίνεται αν το τεμάχιο βγει λάθος;</summary><p>Αν η εκτύπωση δεν αντιστοιχεί στο αρχείο σας, την ξανατυπώνουμε ή επιστρέφουμε τα χρήματα. Αρκούν φωτογραφίες μέσα σε 7 ημέρες από την παράδοση.</p></details>
+  <details><summary>Τα αρχεία μου είναι εμπιστευτικά;</summary><p>Ναι. Χρησιμοποιούμε τα αρχεία σας μόνο για την εκτύπωση της παραγγελίας, δεν τα μοιραζόμαστε και τα διαγράφουμε 30 ημέρες μετά την παράδοση. Δείτε την <a href='#privacy-el'>ενημέρωση απορρήτου</a>.</p></details>
+</section>
+
+<section id="contact" lang="en">
+  <h2>Get in touch</h2>
+  <p class="lead">The fastest way to reach us is email or WhatsApp. We reply within one working day.</p>
+  <div class="contact">
+    <div class="card">
+      <dl>
+        <dt>Email</dt><dd><a href="mailto:hello@layerwork.example">hello@layerwork.example</a></dd>
+        <dt>Phone</dt><dd><a href="tel:+30">+30</a></dd>
+        <dt>WhatsApp</dt><dd><a href="https://wa.me/30">+30 231 000 0000</a></dd>
+        <dt>Workshop</dt><dd>Your street 12, Thessaloniki</dd>
+        <dt>Hours</dt><dd>Mon to Fri, 17:00 to 22:00</dd>
+        <dt>Pickup</dt><dd>By appointment</dd>
+      </dl>
+    </div>
+    <div class="card">
+      <h3 style="font-size:24px">Follow our prints</h3>
+      <p style="color:var(--muted);margin:8px 0 0">New projects, material tests and behind-the-scenes from the print farm.</p>
+      <div class="social">
+        <a href="https://instagram.com/layerwork" rel="noopener">Instagram</a>
+        <a href="https://facebook.com/layerwork" rel="noopener">Facebook</a>
+        <a href="https://tiktok.com/@layerwork" rel="noopener">TikTok</a>
+        <a href="https://youtube.com/@layerwork" rel="noopener">YouTube</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id='contact-el' lang='el'>
+  <h2>Επικοινωνήστε μαζί μας</h2>
+  <p class='lead'>Ο πιο γρήγορος τρόπος είναι email ή WhatsApp. Απαντάμε μέσα σε μία εργάσιμη.</p>
+  <div class='contact'>
+    <div class='card'>
+      <dl>
+        <dt>Email</dt><dd><a href='mailto:hello@layerwork.example'>hello@layerwork.example</a></dd>
+        <dt>Τηλέφωνο</dt><dd><a href='tel:+302310000000'>+30</a></dd>
+        <dt>WhatsApp</dt><dd><a href='https://wa.me/302310000000'>+30 231 000 0000</a></dd>
+        <dt>Εργαστήριο</dt><dd>Οδός 12345, Θεσσαλονίκη</dd>
+        <dt>Ωράριο</dt><dd>Δευτέρα έως Παρασκευή, 17:00 έως 22:00</dd>
+        <dt>Παραλαβή</dt><dd>Κατόπιν ραντεβού</dd>
+      </dl>
+    </div>
+    <div class='card'>
+      <h3 style='font-size:24px'>Ακολουθήστε τις εκτυπώσεις μας</h3>
+      <p style='color:var(--muted);margin:8px 0 0'>Νέα έργα, δοκιμές υλικών και παρασκήνιο από το εργαστήριο.</p>
+      <div class='social'>
+        <a href='https://instagram.com/layerwork' rel='noopener'>Instagram</a>
+        <a href='https://facebook.com/layerwork' rel='noopener'>Facebook</a>
+        <a href='https://tiktok.com/@layerwork' rel='noopener'>TikTok</a>
+        <a href='https://youtube.com/@layerwork' rel='noopener'>YouTube</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id='legal' class='legal' lang='en'>
+  
+</main>
+
+<footer lang="en">
+  <div class="fcols">
+    <span>© 2026 Layerwork. All rights reserved.</span>
+    <span><a href="mailto:hello@layerwork.example">hello@layerwork.example</a> · <a href="tel:+302310000000">+30 231 000 0000</a></span>
+    <span><a href="https://instagram.com/layerwork" rel="noopener">Instagram</a> · <a href="https://facebook.com/layerwork" rel="noopener">Facebook</a></span>
+  </div>
+  <nav class='fnav' aria-label='Legal'><a href='#imprint'>Legal notice</a><a href='#privacy'>Privacy notice</a><a href='#terms'>Terms of sale</a><a href='#cookies'>Cookies</a><a href='mailto:hello@layerwork.example?subject=Right%20of%20withdrawal&amp;body=Order%20number%3A%0AName%3A%0ADate%20of%20order%3A%0AI%20withdraw%20from%20my%20contract%20for%20the%20goods%20listed%20above.'>Withdraw from contract</a></nav>
+</footer>
+<footer lang="el">
+  <div class='fcols'>
+    <span>© 2026 Layerwork. Με επιφύλαξη παντός δικαιώματος.</span>
+    <span><a href='mailto:hello@layerwork.example'>hello@layerwork.example</a> · <a href='tel:+30'>+30</a></span>
+    <span><a href='https://instagram.com/layerwork' rel='noopener'>Instagram</a> · <a href='https://facebook.com/layerwork' rel='noopener'>Facebook</a></span>
+  </div>
+  <!-- <nav class='fnav' aria-label='Νομικά'><a href='#imprint-el'>Νομική σημείωση</a><a href='#privacy-el'>Ενημέρωση απορρήτου</a><a href='#terms-el'>Όροι πώλησης</a><a href='#cookies-el'>Cookies</a><a data-s='Δικαίωμα υπαναχώρησης' data-b='Αριθμός παραγγελίας: -->
+<!-- Ονοματεπώνυμο: -->
+<!-- Ημερομηνία παραγγελίας: -->
+<!-- Υπαναχωρώ από τη σύμβασή μου για τα προϊόντα που αναφέρονται παραπάνω.' href='mailto:hello@layerwork.example'>Υπαναχώρηση από τη σύμβαση</a></nav> -->
+</footer>
+</div>
+
+<script>
+(function(){
+  var cv=document.getElementById('c'),ctx=cv.getContext('2d'),lab=document.getElementById('lay');
+  var N=120,W=cv.width,H=cv.height,base=H-110,step=3.3;
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function css(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
+  function rad(i){var t=i/N;return 78+46*Math.sin(t*Math.PI*1.7+.4)+18*Math.sin(t*Math.PI*5)*.4}
+  function draw(p){
+    ctx.clearRect(0,0,W,H);
+    var cx=W/2,line=css('--line'),blue=css('--blue'),yel='#f2c230';
+    ctx.strokeStyle=line;ctx.lineWidth=2;
+    ctx.beginPath();ctx.ellipse(cx,base+14,220,60,0,0,7);ctx.stroke();
+    var n=Math.floor(p*N);
+    for(var i=0;i<=n;i++){
+      var r=rad(i),y=base-i*step;
+      ctx.strokeStyle=blue;ctx.globalAlpha=.55+.45*(i/N);ctx.lineWidth=3.2;
+      ctx.beginPath();ctx.ellipse(cx,y,r,r*.28,0,0,7);ctx.stroke();
+    }
+    ctx.globalAlpha=1;
+    if(n<N){
+      var r2=rad(n),y2=base-n*step,a=p*60,nx=cx+Math.cos(a)*r2,ny=y2+Math.sin(a)*r2*.28;
+      ctx.strokeStyle=css('--ink');ctx.lineWidth=2;
+      ctx.beginPath();ctx.moveTo(nx,ny-150);ctx.lineTo(nx,ny-22);ctx.stroke();
+      ctx.fillStyle=yel;ctx.beginPath();ctx.moveTo(nx-12,ny-22);ctx.lineTo(nx+12,ny-22);ctx.lineTo(nx,ny);ctx.closePath();ctx.fill();
+    }
+    lab.textContent=(document.documentElement.lang==='el'?'Στρώση ':'Layer ')+Math.min(n,N)+' / '+N;
+  }
+  if(reduce){draw(1);return}
+  var t0=null;
+  function tick(ts){
+    if(!t0)t0=ts;
+    var s=((ts-t0)/1000)%12,p=s<9?s/9:1;
+    draw(p);requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+
+function initCalc(s,el){
+  function $(i){return document.getElementById(i+s)}
+  function calc(){
+    var m=$('mat').value.split('|'),dens=+m[0],rate=+m[1];
+    var x=Math.max(+$('x').value||0,0),y=Math.max(+$('y').value||0,0),z=Math.max(+$('z').value||0,0);
+    var inf=+$('inf').value,q=Math.max(+$('qty').value||1,1);
+    $('ifv').textContent=inf+'%';
+    var vol=x*y*z/1000*0.35;
+    var g=vol*dens*(0.3+0.7*inf/100);
+    var hrs=g/14;
+    var each=g*rate+hrs*1.2;
+    var total=5+each*q*(q>9?0.9:1);
+    $('p').textContent='€'+(el?total.toFixed(2).replace('.',','):total.toFixed(2));
+    $('g').textContent=Math.round(g)+' g';
+    $('h').textContent=hrs<1?Math.round(hrs*60)+(el?' λεπτά':' min'):hrs.toFixed(1)+(el?' ώρες':' h');
+  }
+  ['mat','x','y','z','inf','qty'].forEach(function(i){$(i).addEventListener('input',calc)});
+  calc();
+}
+initCalc('',false);initCalc('e',true);
+(function(){
+  var h=document.documentElement,b=document.getElementById('lg');
+  document.querySelectorAll('[data-s]').forEach(function(a){
+    var u='mailto:hello@layerwork.example?subject='+encodeURIComponent(a.getAttribute('data-s'));
+    if(a.getAttribute('data-b'))u+='&body='+encodeURIComponent(a.getAttribute('data-b'));
+    a.href=u;
+  });
+  function set(l){
+    h.lang=l;
+    b.textContent=l==='el'?'English':'Ελληνικά';
+    b.setAttribute('aria-label',l==='el'?'Switch to English':'Αλλαγή σε Ελληνικά');
+    document.title=l==='el'?'Layerwork – Εκτυπώσεις 3D κατά παραγγελία':'Layerwork – 3D printing, made to order';
+  }
+  var q=location.search.match(/lang=(el|en)/);
+  set(q?q[1]:((navigator.language||'en').toLowerCase().indexOf('el')===0?'el':'en'));
+  b.addEventListener('click',function(){set(h.lang==='el'?'en':'el')});
+})();
+</script>
+</body>
+</html>
