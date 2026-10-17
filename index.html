@@ -3,7 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Layerwork – 3D printing, made to order</title>
+<title>Mr 3D Printer | 3D Printing Service in Thessaloniki</title>
+<meta name="description" id="md" content="Custom 3D printing in Thessaloniki: prototypes, spare parts, miniatures and car parts in PLA, PETG, ASA, TPU and nylon. Send your file and get an instant estimate.">
+<meta name="theme-color" content="#2f5bea">
+<link rel="canonical" href="https://mr3dprinter.eu/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mr3dprinter.eu/">
+<meta property="og:title" content="Mr 3D Printer | 3D Printing Service in Thessaloniki">
+<meta property="og:description" content="Custom 3D printing in Thessaloniki: prototypes, spare parts, miniatures and car parts in PLA, PETG, ASA, TPU and nylon. Send your file and get an instant estimate.">
 <style>
 :root{--bg:#eef1f4;--surface:#fff;--ink:#14202b;--muted:#516070;--line:#cfd7de;--blue:#2f5bea;--yellow:#f2c230;--onblue:#fff;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -91,11 +98,20 @@ html:not([lang='el']) [lang='el']{display:none}
 .legal p,.legal li{color:var(--muted);margin:6px 0}.legal ul{padding-left:20px;margin:6px 0}
 @media (max-width:820px){.hero,.quote,.contact{grid-template-columns:1fr}.steps,.specs{grid-template-columns:1fr 1fr}nav a:not(:last-child){display:none}}
 @media (max-width:480px){.steps,.specs{grid-template-columns:1fr}.btn.alt{margin:10px 0 0}}
+.logo{display:flex;align-items:center;gap:9px}.logo svg{width:30px;height:30px;flex:none}
+.d3{background:var(--yellow);color:#14202b;padding:0 6px;border-radius:5px;margin:0 3px;font-weight:800}
+.eyebrow{display:inline-block;font-weight:500;font-size:14px;letter-spacing:.04em;color:var(--blue);border:1.5px solid var(--line);border-radius:999px;padding:4px 14px;margin:0 0 18px}
+.plate{position:relative}
+.vctl{position:absolute;top:18px;right:18px;display:flex;flex-direction:column;gap:6px;z-index:2}
+.vctl button{width:36px;height:36px;border-radius:8px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font:600 18px/1 inherit;font-family:inherit;cursor:pointer}
+.vctl button:hover{border-color:var(--blue)}
+canvas{touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.hint{margin:6px 4px 0;font-size:13px;color:var(--muted)}
 </style>
 </head>
 <body>
 <header class="bar"><div class="wrap hd">
-  <a class="logo" href="#top"><i></i>Layerwork</a>
+  <a class="logo" href="#top" aria-label="Mr 3D Printer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 21 7 12 12 3 7z" fill="#f2c230"/><path d="M3 7 12 12V22L3 17z" fill="var(--blue)"/><path d="M21 7 12 12V22L21 17z" fill="var(--blue)" opacity=".7"/></svg><span>Mr<b class="d3">3D</b>Printer</span></a>
   <div class="hr"><nav lang="en"><a href="#materials">Materials</a><a href="#process">How it works</a><a href="#faq">FAQ</a><a href="#contact">Contact</a></nav><nav lang="el"><a href="#materials-el">Υλικά</a><a href="#process-el">Πώς λειτουργεί</a><a href="#faq-el">Ερωτήσεις</a><a href="#contact-el">Επικοινωνία</a></nav><button class="lang" id="lg" type="button">Ελληνικά</button></div>
 </div></header>
 <div class="wrap">
@@ -103,18 +119,22 @@ html:not([lang='el']) [lang='el']{display:none}
 <main id="top">
 <div class="hero">
   <div lang="en">
+    <p class="eyebrow">mr3dprinter.eu · Thessaloniki, Greece</p>
     <h1>Your design, printed one layer at a time.</h1>
     <p>Send us an STL or STEP file. We print prototypes, spare parts and small runs in PLA, PETG, ASA and resin, and ship in 2 to 5 working days.</p>
     <a class="btn" href="#quote">Estimate your print</a><a class="btn alt" href="#materials">See materials</a>
   </div>
   <div lang="el">
+    <p class="eyebrow">mr3dprinter.eu · Θεσσαλονίκη, Ελλάδα</p>
     <h1>Το σχέδιό σας, τυπωμένο στρώση προς στρώση.</h1>
     <p>Στείλτε μας ένα αρχείο STL ή STEP. Τυπώνουμε πρωτότυπα, ανταλλακτικά και μικρές παρτίδες σε PLA, PETG, ASA και ρητίνη, και αποστέλλουμε σε 2 έως 5 εργάσιμες.</p>
     <a class="btn" href="#quote-el">Υπολογίστε το κόστος</a><a class="btn alt" href="#materials-el">Δείτε τα υλικά</a>
   </div>
   <div class="plate" aria-label="3D print animation">
-    <canvas id="c" width="560" height="560"></canvas>
+    <div class="vctl"><button type="button" id="zin" aria-label="Zoom in / Μεγέθυνση">+</button><button type="button" id="zout" aria-label="Zoom out / Σμίκρυνση">−</button><button type="button" id="zrs" aria-label="Reset view / Επαναφορά">⟲</button></div>
+    <canvas id="c" width="560" height="560" aria-label="3D model viewer"></canvas>
     <div class="shapes" id="shp" role="group" aria-label="Shapes"></div>
+    <p class="hint"><span lang="en">Drag the model to rotate it. Use + and − to zoom.</span><span lang="el">Σύρετε το μοντέλο για να το περιστρέψετε. Χρησιμοποιήστε + και − για zoom.</span></p>
     <div class="status"><span id="lay">Layer 0 / 120</span><span><span lang="en">0.2 mm layers · PETG</span><span lang="el">στρώσεις 0,2 mm · PETG</span></span></div>
   </div>
 </div>
@@ -124,14 +144,14 @@ html:not([lang='el']) [lang='el']{display:none}
   <p class="lead">Not sure? Choose PLA for looks, PETG for parts that get used, ASA for the outdoors.</p>
   <div class="tbl"><table>
     <tr><th>Material</th><th>Best for</th><th>Strength</th><th>Heat limit</th><th>Price</th></tr>
-    <tr><td><span class="sw" style="background:#2f5bea"></span>PLA</td><td>Models, display pieces, fit checks</td><td>Medium, stiff</td><td>55 °C</td><td>from €40 / kg</td></tr>
-    <tr><td><span class="sw" style="background:#f2c230"></span>PETG</td><td>Brackets, enclosures, water contact</td><td>High, a little flexible</td><td>75 °C</td><td>from €50 / kg</td></tr>
-    <tr><td><span class="sw" style="background:#8a96a3"></span>ASA</td><td>Outdoor parts, car interiors</td><td>High, UV stable</td><td>95 °C</td><td>from €70 / kg</td></tr>
-    <tr><td><span class="sw" style="background:#e0684b"></span>ABS</td><td>Tough housings, tools, parts you sand or paint</td><td>High, impact resistant</td><td>90 °C</td><td>from €50 / kg</td></tr>
-    <tr><td><span class="sw" style="background:#9b59d0"></span>TPU</td><td>Flexible parts: seals, grips, bumpers, phone cases</td><td>Flexible, wear resistant</td><td>80 °C</td><td>from €70 / kg</td></tr>
-    <tr><td><span class="sw" style="background:#c9b79c"></span>Nylon (PA12)</td><td>Gears, hinges, moving parts</td><td>Very high, low friction</td><td>110 °C</td><td>from €110 / kg</td></tr>
-    <tr><td><span class="sw" style="background:#2b2f36"></span>Carbon nylon (PA-CF)</td><td>Stiff, light structural parts and jigs</td><td>Very high, very stiff</td><td>120 °C</td><td>from €180 / kg</td></tr>
-    <tr><td><span class="sw" style="background:#3bb58a"></span>Resin</td><td>Fine detail, small figures, jewelry masters</td><td>Brittle, very smooth</td><td>60 °C</td><td>from €180 / litre</td></tr>
+    <tr><td><span class="sw" style="background:#2f5bea"></span>PLA</td><td>Models, display pieces, fit checks</td><td>Medium, stiff</td><td>55 °C</td><td>from €22 / kg</td></tr>
+    <tr><td><span class="sw" style="background:#f2c230"></span>PETG</td><td>Brackets, enclosures, water contact</td><td>High, a little flexible</td><td>75 °C</td><td>from €24 / kg</td></tr>
+    <tr><td><span class="sw" style="background:#8a96a3"></span>ASA</td><td>Outdoor parts, car interiors</td><td>High, UV stable</td><td>95 °C</td><td>from €32 / kg</td></tr>
+    <tr><td><span class="sw" style="background:#e0684b"></span>ABS</td><td>Tough housings, tools, parts you sand or paint</td><td>High, impact resistant</td><td>90 °C</td><td>from €28 / kg</td></tr>
+    <tr><td><span class="sw" style="background:#9b59d0"></span>TPU</td><td>Flexible parts: seals, grips, bumpers, phone cases</td><td>Flexible, wear resistant</td><td>80 °C</td><td>from €45 / kg</td></tr>
+    <tr><td><span class="sw" style="background:#c9b79c"></span>Nylon (PA12)</td><td>Gears, hinges, moving parts</td><td>Very high, low friction</td><td>110 °C</td><td>from €58 / kg</td></tr>
+    <tr><td><span class="sw" style="background:#2b2f36"></span>Carbon nylon (PA-CF)</td><td>Stiff, light structural parts and jigs</td><td>Very high, very stiff</td><td>120 °C</td><td>from €75 / kg</td></tr>
+    <tr><td><span class="sw" style="background:#3bb58a"></span>Resin</td><td>Fine detail, small figures, jewelry masters</td><td>Brittle, very smooth</td><td>60 °C</td><td>from €25 / kg</td></tr>
   </table></div>
 </section>
 
@@ -140,14 +160,14 @@ html:not([lang='el']) [lang='el']{display:none}
   <p class='lead'>Δεν είστε σίγουροι; PLA για εμφάνιση, PETG για εξαρτήματα που χρησιμοποιούνται, ASA για εξωτερικούς χώρους.</p>
   <div class='tbl'><table>
     <tr><th>Υλικό</th><th>Ιδανικό για</th><th>Αντοχή</th><th>Όριο θερμοκρασίας</th><th>Τιμή</th></tr>
-    <tr><td><span class='sw' style='background:#2f5bea'></span>PLA</td><td>Μακέτες, αντικείμενα επίδειξης, δοκιμές εφαρμογής</td><td>Μέτρια, άκαμπτο</td><td>55 °C</td><td>από €40 / kg</td></tr>
-    <tr><td><span class='sw' style='background:#f2c230'></span>PETG</td><td>Βάσεις, περιβλήματα, επαφή με νερό</td><td>Υψηλή, ελαφρώς εύκαμπτο</td><td>75 °C</td><td>από €50 / kg</td></tr>
-    <tr><td><span class='sw' style='background:#8a96a3'></span>ASA</td><td>Εξωτερικά εξαρτήματα, εσωτερικά αυτοκινήτων</td><td>Υψηλή, ανθεκτικό στην UV</td><td>95 °C</td><td>από €70 / kg</td></tr>
-    <tr><td><span class='sw' style='background:#e0684b'></span>ABS</td><td>Αντισταθμίζουν περιβλήματα, εργαλεία, τεμάχια για τρίψιμο ή βαφή</td><td>Υψηλή, ανθεκτικό σε χτυπήματα</td><td>90 °C</td><td>από €50 / kg</td></tr>
-    <tr><td><span class='sw' style='background:#9b59d0'></span>TPU</td><td>Εύκαμπτα τεμάχια: στεγανοποιήσεις, λαβές, προφυλακτήρες, θήκες κινητών</td><td>Εύκαμπτο, ανθεκτικό στη φθορά</td><td>80 °C</td><td>από €70 / kg</td></tr>
-    <tr><td><span class='sw' style='background:#c9b79c'></span>Nylon (PA12)</td><td>Γρανάζια, βαρδούλες, κινούμενα εξαρτήματα</td><td>Πολύ υψηλή, χαμηλή τριβή</td><td>110 °C</td><td>από €110 / kg</td></tr>
-    <tr><td><span class='sw' style='background:#2b2f36'></span>Nylon με ίνες άνθρακα (PA-CF)</td><td>Ακαμπτα, ελαφρά δομικά τεμάχια και εξαρτήματα στήριξης</td><td>Πολύ υψηλή, πολύ άκαμπτο</td><td>120 °C</td><td>από €180 / kg</td></tr>
-    <tr><td><span class='sw' style='background:#3bb58a'></span>Ρητίνη</td><td>Λεπτομέρεια, μικρά ειδώλια, πρότυπα κοσμημάτων</td><td>Εύθραυστη, πολύ λεία</td><td>60 °C</td><td>από €180 / λίτρο</td></tr>
+    <tr><td><span class='sw' style='background:#2f5bea'></span>PLA</td><td>Μακέτες, αντικείμενα επίδειξης, δοκιμές εφαρμογής</td><td>Μέτρια, άκαμπτο</td><td>55 °C</td><td>από €22 / kg</td></tr>
+    <tr><td><span class='sw' style='background:#f2c230'></span>PETG</td><td>Βάσεις, περιβλήματα, επαφή με νερό</td><td>Υψηλή, ελαφρώς εύκαμπτο</td><td>75 °C</td><td>από €24 / kg</td></tr>
+    <tr><td><span class='sw' style='background:#8a96a3'></span>ASA</td><td>Εξωτερικά εξαρτήματα, εσωτερικά αυτοκινήτων</td><td>Υψηλή, ανθεκτικό στην UV</td><td>95 °C</td><td>από €32 / kg</td></tr>
+    <tr><td><span class='sw' style='background:#e0684b'></span>ABS</td><td>Αντισταθμίζουν περιβλήματα, εργαλεία, τεμάχια για τρίψιμο ή βαφή</td><td>Υψηλή, ανθεκτικό σε χτυπήματα</td><td>90 °C</td><td>από €28 / kg</td></tr>
+    <tr><td><span class='sw' style='background:#9b59d0'></span>TPU</td><td>Εύκαμπτα τεμάχια: στεγανοποιήσεις, λαβές, προφυλακτήρες, θήκες κινητών</td><td>Εύκαμπτο, ανθεκτικό στη φθορά</td><td>80 °C</td><td>από €45 / kg</td></tr>
+    <tr><td><span class='sw' style='background:#c9b79c'></span>Nylon (PA12)</td><td>Γρανάζια, βαρδούλες, κινούμενα εξαρτήματα</td><td>Πολύ υψηλή, χαμηλή τριβή</td><td>110 °C</td><td>από €58 / kg</td></tr>
+    <tr><td><span class='sw' style='background:#2b2f36'></span>Nylon με ίνες άνθρακα (PA-CF)</td><td>Ακαμπτα, ελαφρά δομικά τεμάχια και εξαρτήματα στήριξης</td><td>Πολύ υψηλή, πολύ άκαμπτο</td><td>120 °C</td><td>από €75 / kg</td></tr>
+    <tr><td><span class='sw' style='background:#3bb58a'></span>Ρητίνη</td><td>Λεπτομέρεια, μικρά ειδώλια, πρότυπα κοσμημάτων</td><td>Εύθραυστη, πολύ λεία</td><td>60 °C</td><td>από €25 / kg</td></tr>
   </table></div>
 </section>
 
@@ -157,7 +177,7 @@ html:not([lang='el']) [lang='el']{display:none}
   <div class="quote">
     <div class="card">
       <label>Material
-        <select id="mat"><option value="1.24|0.04">PLA</option><option value="1.27|0.05" selected>PETG</option><option value="1.04|0.05">ABS</option><option value="1.07|0.07">ASA</option><option value="1.21|0.07">TPU (flexible)</option><option value="1.01|0.11">Nylon (PA12)</option><option value="1.15|0.18">Carbon nylon (PA-CF)</option></select>
+        <select id="mat"><option value="1.24|0.022">PLA</option><option value="1.27|0.024" selected>PETG</option><option value="1.04|0.028">ABS</option><option value="1.07|0.032">ASA</option><option value="1.21|0.045">TPU (flexible)</option><option value="1.01|0.058">Nylon (PA12)</option><option value="1.15|0.075">Carbon nylon (PA-CF)</option></select>
       </label>
       <div class="szh">Size in mm (maximum 250 per side)</div>
       <div class="dims"><label>Length<input type="number" id="x" value="80" min="5" max="250"></label><label>Width<input type="number" id="y" value="60" min="5" max="250"></label><label>Height<input type="number" id="z" value="40" min="5" max="250"></label></div>
@@ -175,6 +195,7 @@ html:not([lang='el']) [lang='el']{display:none}
         <dt>Plastic used</dt><dd id="g">–</dd>
         <dt>Print time per part</dt><dd id="h">–</dd>
         <dt>Setup fee</dt><dd>€9.00</dd>
+        <dt>Service fee (1.4%)</dt><dd id="fee">–</dd>
       </dl>
       <p style="margin:22px 0 0;display:flex;flex-wrap:wrap;gap:10px"><a class="btn" id="mail" href="mailto:info@mr3dprinter.eu">Email this estimate</a><button class="btn alt" id="copy" type="button" style="margin:0">Copy as text</button></p>
       <p class="note">This estimate is calculated in your browser. Nothing you enter here is sent or stored. The button opens your email app with these details filled in, so remember to attach your 3D file. If you email us, see our <a href="#privacy">privacy notice</a>.</p>
@@ -188,11 +209,11 @@ html:not([lang='el']) [lang='el']{display:none}
   <div class='quote'>
     <div class='card'>
       <label>Υλικό
-        <select id='mate'><option value='1.24|0.04'>PLA</option><option value='1.27|0.05' selected>PETG</option><option value='1.04|0.05'>ABS</option><option value='1.07|0.07'>ASA</option><option value='1.21|0.07'>TPU (εύκαμπτο)</option><option value='1.01|0.11'>Nylon (PA12)</option><option value='1.15|0.18'>Nylon PA-CF</option></select>
+        <select id='mate'><option value='1.24|0.022'>PLA</option><option value='1.27|0.024' selected>PETG</option><option value='1.04|0.028'>ABS</option><option value='1.07|0.032'>ASA</option><option value='1.21|0.045'>TPU (εύκαμπτο)</option><option value='1.01|0.058'>Nylon (PA12)</option><option value='1.15|0.075'>Nylon PA-CF</option></select>
       </label>
       <div class='szh'>Διαστάσεις σε mm (μέγιστο 250 ανά πλευρά)</div>
       <div class='dims'><label>Μήκος<input type='number' id='xe' value='80' min='5' max='250'></label><label>Πλάτος<input type='number' id='ye' value='60' min='5' max='250'></label><label>Ύψος<input type='number' id='ze' value='40' min='5' max='250'></label></div>
-      <p class='note' id='lim' role='status' style='margin:-6px 0 14px'></p>
+      <p class='note' id='lime' role='status' style='margin:-6px 0 14px'></p>
       <label>Πλήρωση: <b id='ifve'>20%</b>
         <input type='range' id='infe' min='5' max='100' value='20'>
       </label>
@@ -206,6 +227,7 @@ html:not([lang='el']) [lang='el']{display:none}
         <dt>Πλαστικό που καταναλώνεται</dt><dd id='ge'>–</dd>
         <dt>Χρόνος εκτύπωσης ανά τεμάχιο</dt><dd id='he'>–</dd>
         <dt>Τέλος προετοιμασίας</dt><dd>€9,00</dd>
+        <dt>Τέλος υπηρεσίας (1,4%)</dt><dd id='feee'>–</dd>
       </dl>
       <p style='margin:22px 0 0;display:flex;flex-wrap:wrap;gap:10px'><a class='btn' id='maile' href='mailto:info@mr3dprinter.eu'>Στείλτε την εκτίμηση με email</a><button class='btn alt' id='copye' type='button' style='margin:0'>Αντιγραφή κειμένου</button></p>
       <p class='note'>Ο υπολογισμός γίνεται στον περιηγητή σας. Τίποτα από όσα συμπληρώνετε εδώ δεν αποστέλλεται ή αποθηκεύεται. Το κουμπί ανοίγει την εφαρμογή email σας με τα στοιχεία συμπληρωμένα· θυμηθείτε να επισυνάψετε το αρχείο 3D. Αν μας στείλετε email, δείτε την <a href='#privacy-el'>ενημέρωση απορρήτου</a>.</p>
@@ -263,7 +285,7 @@ html:not([lang='el']) [lang='el']{display:none}
   <details><summary>Do you ship abroad?</summary><p>Yes, within the EU in 3 to 7 working days. Shipping is calculated from weight and destination. Local pickup is free.</p></details>
   <details><summary>Can I cancel or return a custom print?</summary><p>You can cancel for free until we start printing. Parts made to your file are excluded from the 14-day withdrawal right under EU law, but our legal guarantee still covers faulty parts. Details in our <a href="#terms">terms of sale</a>.</p></details>
   <details><summary>How do I pay?</summary><p>Bank transfer or card link after you approve the final quote. Orders start once payment arrives.</p></details>
-  <details><summary>What if my part comes out wrong?</summary><p>If the print doesn't match your file, we reprint it or refund it. Photos within 7 days of delivery are enough.</p></details>
+  <details><summary>What if my part comes out wrong?</summary><p>If the print doesn't match your file, we reprint it or refund it. Photos within 5 days of delivery are enough. All claims are subject to verification against the original file and agreed specifications. We reserve the right to decline claims where no manufacturing defect or discrepancy can be established. Your statutory rights are not affected.</p></details>
   <details><summary>Is my file kept private?</summary><p>Yes. We use your files only to print your order, never share them, and delete them 30 days after delivery. See our <a href="#privacy">privacy notice</a>.</p></details>
 </section>
 
@@ -274,7 +296,7 @@ html:not([lang='el']) [lang='el']{display:none}
   <details><summary>Στέλνετε στο εξωτερικό;</summary><p>Ναι, εντός ΕΕ σε 3 έως 7 εργάσιμες. Τα μεταφορικά υπολογίζονται με βάση το βάρος και τον προορισμό. Η παραλαβή από το εργαστήριο είναι δωρεάν.</p></details>
   <details><summary>Μπορώ να ακυρώσω ή να επιστρέψω μια εκτύπωση κατά παραγγελία;</summary><p>Μπορείτε να ακυρώσετε δωρεάν μέχρι να ξεκινήσουμε την εκτύπωση. Τα τεμάχια που κατασκευάζονται με βάση το δικό σας αρχείο εξαιρούνται από το δικαίωμα υπαναχώρησης 14 ημερών, αλλά η νόμιμη εγγύηση καλύπτει τα ελαττωματικά τεμάχια. Δείτε τους <a href='#terms-el'>όρους πώλησης</a>.</p></details>
   <details><summary>Πώς πληρώνω;</summary><p>Με τραπεζική κατάθεση ή σύνδεσμο πληρωμής με κάρτα, αφού εγκρίνετε την τελική προσφορά. Η παραγγελία ξεκινά μόλις γίνει η πληρωμή.</p></details>
-  <details><summary>Τι γίνεται αν το τεμάχιο βγει λάθος;</summary><p>Αν η εκτύπωση δεν αντιστοιχεί στο αρχείο σας, την ξανατυπώνουμε ή επιστρέφουμε τα χρήματα. Αρκούν φωτογραφίες μέσα σε 7 ημέρες από την παράδοση.</p></details>
+  <details><summary>Τι γίνεται αν το τεμάχιο βγει λάθος;</summary><p>Αν η εκτύπωση δεν αντιστοιχεί στο αρχείο σας, την ξανατυπώνουμε ή επιστρέφουμε τα χρήματα. Αρκούν φωτογραφίες μέσα σε 5 ημέρες από την παράδοση. Όλες οι αξιώσεις υπόκεινται σε έλεγχο με βάση το αρχικό αρχείο και τις συμφωνημένες προδιαγραφές. Διατηρούμε το δικαίωμα να απορρίπτουμε αξιώσεις όταν δεν μπορεί να τεκμηριωθεί ελάττωμα κατασκευής ή απόκλιση. Τα νόμιμα δικαιώματά σας δεν επηρεάζονται.</p></details>
   <details><summary>Τα αρχεία μου είναι εμπιστευτικά;</summary><p>Ναι. Χρησιμοποιούμε τα αρχεία σας μόνο για την εκτύπωση της παραγγελίας, δεν τα μοιραζόμαστε και τα διαγράφουμε 30 ημέρες μετά την παράδοση. Δείτε την <a href='#privacy-el'>ενημέρωση απορρήτου</a>.</p></details>
 </section>
 
@@ -296,10 +318,10 @@ html:not([lang='el']) [lang='el']{display:none}
       <h3 style="font-size:24px">Follow our prints</h3>
       <p style="color:var(--muted);margin:8px 0 0">New projects, material tests and behind-the-scenes from the print farm.</p>
       <div class="social">
-        <a href="https://instagram.com/layerwork" rel="noopener">Instagram</a>
-        <a href="https://facebook.com/layerwork" rel="noopener">Facebook</a>
-        <a href="https://tiktok.com/@layerwork" rel="noopener">TikTok</a>
-        <a href="https://youtube.com/@layerwork" rel="noopener">YouTube</a>
+        <a href="https://instagram.com/mr3dprinter" rel="noopener">Instagram</a>
+        <a href="https://facebook.com/mr3dprinter" rel="noopener">Facebook</a>
+        <a href="https://tiktok.com/@mr3dprinter" rel="noopener">TikTok</a>
+        <a href="https://youtube.com/@mr3dprinter" rel="noopener">YouTube</a>
       </div>
     </div>
   </div>
@@ -323,10 +345,10 @@ html:not([lang='el']) [lang='el']{display:none}
       <h3 style='font-size:24px'>Ακολουθήστε τις εκτυπώσεις μας</h3>
       <p style='color:var(--muted);margin:8px 0 0'>Νέα έργα, δοκιμές υλικών και παρασκήνιο από το εργαστήριο.</p>
       <div class='social'>
-        <a href='https://instagram.com/layerwork' rel='noopener'>Instagram</a>
-        <a href='https://facebook.com/layerwork' rel='noopener'>Facebook</a>
-        <a href='https://tiktok.com/@layerwork' rel='noopener'>TikTok</a>
-        <a href='https://youtube.com/@layerwork' rel='noopener'>YouTube</a>
+        <a href='https://instagram.com/mr3dprinter' rel='noopener'>Instagram</a>
+        <a href='https://facebook.com/mr3dprinter' rel='noopener'>Facebook</a>
+        <a href='https://tiktok.com/@mr3dprinter' rel='noopener'>TikTok</a>
+        <a href='https://youtube.com/@mr3dprinter' rel='noopener'>YouTube</a>
       </div>
     </div>
   </div>
@@ -367,7 +389,7 @@ html:not([lang='el']) [lang='el']{display:none}
     <p>Consumers in the EU normally have 14 days to withdraw from a distance contract without giving a reason. This does not apply to goods made to your specifications or clearly personalised (Art. 16(c) of Directive 2011/83/EU). Parts we print from your file are in this category, and we tell you so before you order. You can still cancel by email at no cost until we start printing.</p>
     <p>If you buy a standard item that is not made to your specification, you have 14 days from receiving it to withdraw. You do not need to log in or give a reason. Use the button below or the link in the footer. We confirm receipt by email and refund within 14 days of your notice, and we may wait until we get the goods back or you show proof of sending. <a class='btn' style='margin-top:10px' href='mailto:info@mr3dprinter.eu?subject=Right%20of%20withdrawal&amp;body=Order%20number%3A%0AName%3A%0ADate%20of%20order%3A%0AI%20withdraw%20from%20my%20contract%20for%20the%20goods%20listed%20above.'>Withdraw from contract</a></p>
     <h4>Faulty goods</h4>
-    <p>You have a legal guarantee of at least two years for goods that do not match the contract. We repair, replace or refund as the law provides. Our promise to reprint or refund a part that does not match your file is in addition to this, not instead of it.</p>
+    <p>You have a legal guarantee of at least two years for goods that do not match the contract. We repair, replace or refund as the law provides. Our promise to reprint or refund a part that does not match your file is in addition to this, not instead of it. It applies when you send us photos within 5 days of delivery. All claims are subject to verification against the original file and agreed specifications, and we may decline claims where no manufacturing defect or discrepancy can be established. This does not affect your statutory rights.</p>
     <h4>Your files and what we print</h4>
     <p>You confirm you own the rights to your file or have permission to use it. We do not print firearms or firearm parts, items meant to cause harm, or anything unlawful or infringing, and we may refuse or cancel such orders. Visible layer lines and tolerance of about 0.2 mm are normal for 3D printing.</p>
     <h4>Complaints and disputes</h4>
@@ -417,7 +439,7 @@ html:not([lang='el']) [lang='el']{display:none}
 Ημερομηνία παραγγελίας:
 Υπαναχωρώ από τη σύμβασή μου για τα προϊόντα που αναφέρονται παραπάνω.' href='mailto:info@mr3dprinter.eu'>Υπαναχώρηση από τη σύμβαση</a></p>
     <h4>Ελαττωματικά προϊόντα</h4>
-    <p>Έχετε νόμιμη εγγύηση τουλάχιστον δύο ετών για προϊόντα που δεν αντιστοιχούν στη σύμβαση. Επισκευάζουμε, αντικαθιστούμε ή επιστρέφουμε τα χρήματα όπως ορίζει ο νόμος. Η δέσμευσή μας να ξανατυπώσουμε ή να επιστρέψουμε τα χρήματα για τεμάχιο που δεν αντιστοιχεί στο αρχείο σας ισχύει επιπλέον και όχι αντί αυτής.</p>
+    <p>Έχετε νόμιμη εγγύηση τουλάχιστον δύο ετών για προϊόντα που δεν αντιστοιχούν στη σύμβαση. Επισκευάζουμε, αντικαθιστούμε ή επιστρέφουμε τα χρήματα όπως ορίζει ο νόμος. Η δέσμευσή μας να ξανατυπώσουμε ή να επιστρέψουμε τα χρήματα για τεμάχιο που δεν αντιστοιχεί στο αρχείο σας ισχύει επιπλέον και όχι αντί αυτής. Ισχύει όταν μας στείλετε φωτογραφίες εντός 5 ημερών από την παράδοση. Κάθε αξίωση υπόκειται σε έλεγχο με βάση το αρχικό αρχείο και τις συμφωνημένες προδιαγραφές, και μπορούμε να την απορρίψουμε όταν δεν μπορεί να τεκμηριωθεί ελάττωμα κατασκευής ή απόκλιση. Αυτό δεν επηρεάζει τα νόμιμα δικαιώματά σας.</p>
     <h4>Τα αρχεία σας και τι τυπώνουμε</h4>
     <p>Βεβαιώνετε ότι διαθέτετε τα δικαιώματα του αρχείου σας ή έχετε άδεια χρήσης. Δεν τυπώνουμε πυροβόλα όπλα ή εξαρτήματά τους, αντικείμενα που προορίζονται να προκαλέσουν βλάβη ή οτιδήποτε παράνομο ή που παραβιάζει δικαιώματα τρίτων, και μπορούμε να αρνηθούμε ή να ακυρώσουμε τέτοιες παραγγελίες. Οι ορατές γραμμές στρώσεων και η ανοχή περίπου 0,2 mm είναι φυσιολογικές στην τρισδιάστατη εκτύπωση.</p>
     <h4>Παράπονα και διαφορές</h4>
@@ -432,17 +454,17 @@ html:not([lang='el']) [lang='el']{display:none}
 
 <footer lang="en">
   <div class="fcols">
-    <span>© 2026 Layerwork. All rights reserved.</span>
+    <span>© 2026 Mr 3D Printer. All rights reserved.</span>
     <span><a href="mailto:info@mr3dprinter.eu">info@mr3dprinter.eu</a> · <a href="tel:+302310000000">+30 231 000 0000</a></span>
-    <span><a href="https://instagram.com/layerwork" rel="noopener">Instagram</a> · <a href="https://facebook.com/layerwork" rel="noopener">Facebook</a></span>
+    <span><a href="https://instagram.com/mr3dprinter" rel="noopener">Instagram</a> · <a href="https://facebook.com/mr3dprinter" rel="noopener">Facebook</a></span>
   </div>
   <nav class='fnav' aria-label='Legal'><a href='#imprint'>Legal notice</a><a href='#privacy'>Privacy notice</a><a href='#terms'>Terms of sale</a><a href='#cookies'>Cookies</a><a href='mailto:info@mr3dprinter.eu?subject=Right%20of%20withdrawal&amp;body=Order%20number%3A%0AName%3A%0ADate%20of%20order%3A%0AI%20withdraw%20from%20my%20contract%20for%20the%20goods%20listed%20above.'>Withdraw from contract</a></nav>
 </footer>
 <footer lang="el">
   <div class='fcols'>
-    <span>© 2026 Layerwork. Με επιφύλαξη παντός δικαιώματος.</span>
+    <span>© 2026 Mr 3D Printer. Με επιφύλαξη παντός δικαιώματος.</span>
     <span><a href='mailto:info@mr3dprinter.eu'>info@mr3dprinter.eu</a> · <a href='tel:+302310000000'>+30 231 000 0000</a></span>
-    <span><a href='https://instagram.com/layerwork' rel='noopener'>Instagram</a> · <a href='https://facebook.com/layerwork' rel='noopener'>Facebook</a></span>
+    <span><a href='https://instagram.com/mr3dprinter' rel='noopener'>Instagram</a> · <a href='https://facebook.com/mr3dprinter' rel='noopener'>Facebook</a></span>
   </div>
   <nav class='fnav' aria-label='Νομικά'><a href='#imprint-el'>Νομική σημείωση</a><a href='#privacy-el'>Ενημέρωση απορρήτου</a><a href='#terms-el'>Όροι πώλησης</a><a href='#cookies-el'>Cookies</a><a data-s='Δικαίωμα υπαναχώρησης' data-b='Αριθμός παραγγελίας:
 Ονοματεπώνυμο:
@@ -459,13 +481,50 @@ html:not([lang='el']) [lang='el']{display:none}
   function css(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
   function rect(w,d){return function(a){return 1/Math.pow(Math.pow(Math.abs(Math.cos(a))/w,10)+Math.pow(Math.abs(Math.sin(a))/d,10),.1)}}
   var S=[
-   {en:'Benchy',el:'Benchy',h:1.2,f:function(t){var z=t*1.2,L=[],k,HP=[],Q=[];if(z<.45){var fl=.8+.2*z/.45;for(k=0;k<=35;k++){var u=k/35,x=-.8+1.8*u,f=u<.55?1:Math.pow(Math.max(0,1-(u-.55)/.45),.7);if(u<.07)f*=Math.sqrt(.5+.5*u/.07);var y=.34*f*fl;HP.push(x,y);Q.push(x,-y)}for(k=35;k>=0;k--)HP.push(Q[2*k],Q[2*k+1]);L.push({p:HP})}else{if(z<.85)L.push({x:-.3,y:0,m:32,r:rect(.26,.2)});else if(z<.92)L.push({x:-.3,y:0,m:32,r:rect(.3,.24)});if(z>=.85)L.push({x:-.42,y:0,m:20,r:function(){return .07}})}return L}},
-   {en:'Mini bricks',el:'Μίνι τουβλάκια',h:.8,f:function(t){var c=Math.min(4,Math.floor(t*.8/.16)),o=c%2?.1:-.1,L=[],i,j;for(j=0;j<2;j++)for(i=0;i<4;i++)L.push({x:-.6+i*.4+o,y:-.12+j*.24,m:32,r:rect(.17,.1)});return L}},
-   {en:'Toy brick',el:'Τουβλάκι',h:.48,f:function(t){var L=[],i,j;if(t<=.8)L.push(rect(.62,.31));else for(i=0;i<4;i++)for(j=0;j<2;j++)L.push({x:-.465+i*.31,y:-.155+j*.31,m:24,r:function(){return .093}});return L}},
-   {en:'Standing star',el:'Όρθιο αστέρι',h:1.809,f:function(t){var zz=-.805+t*1.803,V=[],xs=[],L=[],i,p,q;for(i=0;i<10;i++){var R=i%2?.42:1,an=P/2+i*P/5;V.push([R*Math.cos(an),R*Math.sin(an)])}for(i=0;i<10;i++){p=V[i];q=V[(i+1)%10];if((p[1]<=zz&&q[1]>zz)||(q[1]<=zz&&p[1]>zz))xs.push(p[0]+(zz-p[1])/(q[1]-p[1])*(q[0]-p[0]))}xs.sort(function(a,b){return a-b});for(i=0;i+1<xs.length;i+=2)L.push({x:(xs[i]+xs[i+1])/2,y:0,r:rect(Math.max(.015,(xs[i+1]-xs[i])/2),.2)});return L}},
-   {en:'Twisted vase',el:'Στριφτό βάζο',h:1.3,f:function(t){var b=.55+.26*Math.sin(t*3+.3);return[function(a){return b*(1+.15*Math.cos(5*a+t*7))}]}},
-   {en:'Mushroom',el:'Μανιτάρι',h:1.1,f:function(t){var u=Math.max(0,(t-.45)/.55),c=.95*Math.sqrt(Math.max(0,1-u*u))*Math.min(1,.21+u*5),r=Math.max(.2,t<.45?.2:c);return[function(){return r}]}},
-   {en:'Cog',el:'Γρανάζι',h:.35,f:function(){return[function(a){return .8+.15*Math.tanh(4*Math.sin(14*a))},function(){return .28}]}}
+   {en:'Miniatures',el:'Μινιατούρες',h:1.25,f:function(t){
+    var z=t*1.245,L=[],F=function(x,y,r,m){L.push({x:x,y:y,m:m||64,r:r})},r,w,q,bw,e,ew;
+    if(z<.06){L.push(rect(1.2,.5));return L}
+    w=0;r=0;
+    if(z<.6){r=.3-.17*(z-.06)/.54;w=.05}
+    else if(z<.8)r=Math.max(.05,Math.sqrt(Math.max(0,.0121-Math.pow(z-.7,2))));
+    else if(z<.84)r=.2;
+    else r=Math.max(.01,.13*(1-(z-.84)/.41));
+    F(0,0,function(a){return r*(1+w*Math.cos(4*a+z*5))});
+    if(z<1)F(.27,.05,function(){return .025},12);
+    else if(z<1.12)F(.27,.05,function(){return .055},20);
+    q=0;
+    if(z<.45)q=(z>.26&&z<.3)?.25:.28;
+    else if(z<.64)q=Math.max(.08,Math.sqrt(Math.max(0,.0196-Math.pow(z-.55,2))));
+    else if(z<.76)q=.16*(1-Math.pow((z-.64)/.12,2)*.7);
+    bw=(z>.32&&z<.52)?.09:0;
+    if(q>0)F(-.75,0,function(a){return q+bw*Math.pow(Math.max(0,Math.sin(a)),2)});
+    if(z<.62)F(-.45,0,function(){return .022},12);
+    if(z>.48&&z<.62)F(-.42,0,rect(.08,.03),24);
+    e=0;
+    if(z<.78)e=.2-.08*(z-.06)/.72;
+    else if(z<1)e=Math.max(.06,Math.sqrt(Math.max(0,.0121-Math.pow(z-.88,2))));
+    ew=Math.max(0,1-Math.abs(z-.9)/.06);
+    if(e>0)F(.75,0,function(a){return e+.1*ew*Math.pow(Math.abs(Math.sin(a)),10)});
+    if(z<1.05)F(1.02,0,function(){return .018},12);
+    return L}},
+   {en:'Car parts',el:'Ανταλλακτικά αυτοκινήτου',h:.4,f:function(t){
+    var z=t*.395,zl=z-.05,L=[],k=.6,cx=-.78,hx=.7,i,th,dx,dy,nx,ny;
+    if(z<.05){L.push(rect(1.5,.75));return L}
+    if(zl<.2){
+      L.push({x:cx,y:0,m:144,r:function(a){return k*(1+.018*Math.tanh(4*Math.sin(36*a)))}});
+      L.push({x:cx,y:0,r:function(){return k*.68}});
+    }
+    if(zl<.16)for(i=0;i<5;i++){th=i*2*P/5;dx=Math.cos(th);dy=Math.sin(th);nx=-dy*.03;ny=dx*.03;
+      L.push({p:[cx+dx*.06+nx,dy*.06+ny,cx+dx*.43+nx,dy*.43+ny,cx+dx*.43-nx,dy*.43-ny,cx+dx*.06-nx,dy*.06-ny]})}
+    if(zl<.19){L.push({x:cx,y:0,r:function(){return k*.24}});L.push({x:cx,y:0,r:function(){return k*.07}})}
+    if(zl<.35){
+      L.push({x:hx,y:0,r:function(){return zl<.04?.58:(zl>.3?.53:.5)}});
+      if(zl>.02)L.push({x:hx,y:0,r:function(){return .38}});
+      if(zl>.08&&zl<.3)for(i=0;i<3;i++){th=i*2*P/3+.5;dx=Math.cos(th);dy=Math.sin(th);nx=-dy*.035;ny=dx*.035;
+        L.push({p:[hx+dx*.3+nx,dy*.3+ny,hx+dx*.39+nx,dy*.39+ny,hx+dx*.39-nx,dy*.39-ny,hx+dx*.3-nx,dy*.3-ny]})}
+    }
+    return L}},
+   {en:'Everyday items',el:'Καθημερινά αντικείμενα',h:.8,f:function(t){var z=t*.8,L=[];L.push(function(){return .5});if(z>.06)L.push(function(){return .44});if((z>.15&&z<.27)||(z>.55&&z<.67))L.push({x:.62,y:0,m:24,r:rect(.15,.05)});if(z>.15&&z<.67)L.push({x:.76,y:0,m:24,r:rect(.04,.05)});return L}}
   ];
   var cur=0,pts=[],btn=[],auto=true,start=null;
   function build(k){
@@ -507,7 +566,7 @@ html:not([lang='el']) [lang='el']{display:none}
     }
     lab.textContent=(document.documentElement.lang==='el'?'Στρώση ':'Layer ')+(p<1?n+1:N)+' / '+N;
   }
-  function show(k){cur=k;build(k);if(reduce)draw(1,.6);else start=null}
+  function show(k){cur=k;build(k);if(reduce)draw(1,rot);else start=null}
   S.forEach(function(s,k){
     var b=document.createElement('button');b.type='button';b.className='chip';
     b.innerHTML='<span lang="en">'+s.en+'</span><span lang="el">'+s.el+'</span>';
@@ -515,12 +574,41 @@ html:not([lang='el']) [lang='el']{display:none}
     box.appendChild(b);btn.push(b);
   });
   build(0);
-  if(reduce){draw(1,.6);return}
+  var rot=.6,tiltV=TILT,zoom=1,dragging=false,px=0,py=0,lastT=0,lastTs=0;
+  function setView(){SC=185*zoom;cT=Math.cos(tiltV);sT=Math.sin(tiltV);if(reduce)draw(1,rot)}
+  function touched(){lastT=performance.now()}
+  function zm(f){zoom=Math.max(.6,Math.min(1.6,zoom*f));touched();setView()}
+  cv.style.cursor='grab';cv.tabIndex=0;
+  cv.addEventListener('pointerdown',function(e){dragging=true;px=e.clientX;py=e.clientY;try{cv.setPointerCapture(e.pointerId)}catch(x){}cv.style.cursor='grabbing'});
+  cv.addEventListener('pointermove',function(e){
+    if(!dragging)return;
+    rot+=(e.clientX-px)*.012;
+    if(e.pointerType!=='touch')tiltV=Math.max(.12,Math.min(1.3,tiltV+(e.clientY-py)*.008));
+    px=e.clientX;py=e.clientY;touched();setView();
+  });
+  function up(){dragging=false;cv.style.cursor='grab';touched()}
+  cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
+  cv.addEventListener('wheel',function(e){if(!e.ctrlKey)return;e.preventDefault();zm(e.deltaY<0?1.06:.94)},{passive:false});
+  cv.addEventListener('keydown',function(e){
+    var k=e.key;
+    if(k==='ArrowLeft')rot-=.15;else if(k==='ArrowRight')rot+=.15;
+    else if(k==='ArrowUp')tiltV=Math.min(1.3,tiltV+.06);else if(k==='ArrowDown')tiltV=Math.max(.12,tiltV-.06);
+    else if(k==='+'||k==='='){zm(1.1);e.preventDefault();return}else if(k==='-'){zm(1/1.1);e.preventDefault();return}
+    else return;
+    e.preventDefault();touched();setView();
+  });
+  document.getElementById('zin').addEventListener('click',function(){zm(1.15)});
+  document.getElementById('zout').addEventListener('click',function(){zm(1/1.15)});
+  document.getElementById('zrs').addEventListener('click',function(){tiltV=TILT;zoom=1;touched();setView()});
+  setView();
+  if(reduce){draw(1,rot);return}
   function tick(ts){
     if(start===null)start=ts;
+    var dt=lastTs?Math.min(.1,(ts-lastTs)/1000):0;lastTs=ts;
+    if(!dragging&&performance.now()-lastT>2500)rot+=dt*.45;
     var e=(ts-start)/1000,p=e<4?e/4:1;
     if(e>6.5){if(auto){cur=(cur+1)%S.length;build(cur)}start=ts;p=0}
-    draw(p,ts/1000*.45);requestAnimationFrame(tick);
+    draw(p,rot);requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
 })();
@@ -539,13 +627,14 @@ function initCalc(s,el){
     var g=vol*dens*(0.3+0.7*inf/100);
     var hrs=g/14;
     var each=g*rate+hrs*1.2;
-    var total=9+each*q*(q>9?0.9:1);
+    var sub=9+each*q*(q>9?0.9:1),fee=sub*0.014,total=sub+fee;
     $('p').textContent='€'+(el?total.toFixed(2).replace('.',','):total.toFixed(2));
+    $('fee').textContent='€'+(el?fee.toFixed(2).replace('.',','):fee.toFixed(2));
     $('g').textContent=Math.round(g)+' g';
     $('h').textContent=hrs<1?Math.round(hrs*60)+(el?' λεπτά':' min'):hrs.toFixed(1)+(el?' ώρες':' h');
     var sel=$('mat'),mn=sel.options[sel.selectedIndex].text,ps=$('p').textContent,gs=$('g').textContent,hs=$('h').textContent;
-    var L=el?['Γεια σας Layerwork,','','Θα ήθελα προσφορά για εκτύπωση 3D. Τα στοιχεία μου είναι τα παρακάτω.','','ΔΙΑΣΤΑΣΕΙΣ ΤΕΜΑΧΙΟΥ','  Μήκος: '+x+' mm','  Πλάτος: '+y+' mm','  Ύψος: '+z+' mm','','ΡΥΘΜΙΣΕΙΣ ΕΚΤΥΠΩΣΗΣ','  Υλικό: '+mn,'  Πλήρωση: '+inf+'%','  Ποσότητα: '+q,'','ΕΚΤΙΜΗΣΗ ΑΠΟ ΤΟΝ ΙΣΤΟΤΟΠΟ ΣΑΣ','  Πλαστικό: '+gs,'  Χρόνος εκτύπωσης ανά τεμάχιο: '+hs,'  Εκτιμώμενο σύνολο: '+ps+' (ενδεικτικά)','','ΤΑ ΣΤΟΙΧΕΙΑ ΜΟΥ','  Ονοματεπώνυμο:','  Τηλέφωνο (προαιρετικά):','  Πόλη / χώρα παράδοσης:','  Επιθυμητή ημερομηνία:','','Επισυνάπτω το αρχείο 3D (STL, 3MF, STEP ή OBJ).','','Ευχαριστώ,']
-    :['Hello Layerwork,','','I would like a quote for a 3D print. My details are below.','','PART SIZE','  Length: '+x+' mm','  Width: '+y+' mm','  Height: '+z+' mm','','PRINT SETTINGS','  Material: '+mn,'  Infill: '+inf+'%','  Quantity: '+q,'','ESTIMATE FROM YOUR WEBSITE','  Plastic used: '+gs,'  Print time per part: '+hs,'  Estimated total: '+ps+' (rough guide)','','MY DETAILS','  Name:','  Phone (optional):','  Delivery city / country:','  Deadline:','','My 3D file is attached (STL, 3MF, STEP or OBJ).','','Thank you,'];
+    var L=el?['Γεια σας Mr 3D Printer,','','Θα ήθελα προσφορά για εκτύπωση 3D. Τα στοιχεία μου είναι τα παρακάτω.','','ΔΙΑΣΤΑΣΕΙΣ ΤΕΜΑΧΙΟΥ','  Μήκος: '+x+' mm','  Πλάτος: '+y+' mm','  Ύψος: '+z+' mm','','ΡΥΘΜΙΣΕΙΣ ΕΚΤΥΠΩΣΗΣ','  Υλικό: '+mn,'  Πλήρωση: '+inf+'%','  Ποσότητα: '+q,'','ΕΚΤΙΜΗΣΗ ΑΠΟ ΤΟΝ ΙΣΤΟΤΟΠΟ ΣΑΣ','  Πλαστικό: '+gs,'  Χρόνος εκτύπωσης ανά τεμάχιο: '+hs,'  Εκτιμώμενο σύνολο: '+ps+' (ενδεικτικά)','','ΤΑ ΣΤΟΙΧΕΙΑ ΜΟΥ','  Ονοματεπώνυμο:','  Τηλέφωνο (προαιρετικά):','  Πόλη / χώρα παράδοσης:','  Επιθυμητή ημερομηνία:','','Επισυνάπτω το αρχείο 3D (STL, 3MF, STEP ή OBJ).','','Ευχαριστώ,']
+    :['Hello Mr 3D Printer,','','I would like a quote for a 3D print. My details are below.','','PART SIZE','  Length: '+x+' mm','  Width: '+y+' mm','  Height: '+z+' mm','','PRINT SETTINGS','  Material: '+mn,'  Infill: '+inf+'%','  Quantity: '+q,'','ESTIMATE FROM YOUR WEBSITE','  Plastic used: '+gs,'  Print time per part: '+hs,'  Estimated total: '+ps+' (rough guide)','','MY DETAILS','  Name:','  Phone (optional):','  Delivery city / country:','  Deadline:','','My 3D file is attached (STL, 3MF, STEP or OBJ).','','Thank you,'];
     mailSubj=(el?'Αίτημα προσφοράς εκτύπωσης – ':'Print quote request – ')+mn+', '+x+' × '+y+' × '+z+' mm';
     mailBody=L.join('\r\n');
     $('mail').href='mailto:info@mr3dprinter.eu?subject='+encodeURIComponent(mailSubj)+'&body='+encodeURIComponent(mailBody);
@@ -572,7 +661,8 @@ initCalc('',false);initCalc('e',true);
     h.lang=l;
     b.textContent=l==='el'?'English':'Ελληνικά';
     b.setAttribute('aria-label',l==='el'?'Switch to English':'Αλλαγή σε Ελληνικά');
-    document.title=l==='el'?'Layerwork – Εκτυπώσεις 3D κατά παραγγελία':'Layerwork – 3D printing, made to order';
+    document.title=l==='el'?'Mr 3D Printer | Υπηρεσία Εκτυπώσεων 3D στη Θεσσαλονίκη':'Mr 3D Printer | 3D Printing Service in Thessaloniki';
+    document.getElementById('md').setAttribute('content',l==='el'?'Εκτυπώσεις 3D κατά παραγγελία στη Θεσσαλονίκη: πρωτότυπα, ανταλλακτικά, μινιατούρες και ανταλλακτικά αυτοκινήτου σε PLA, PETG, ASA, TPU και nylon. Στείλτε το αρχείο σας και δείτε άμεση εκτίμηση.':'Custom 3D printing in Thessaloniki: prototypes, spare parts, miniatures and car parts in PLA, PETG, ASA, TPU and nylon. Send your file and get an instant estimate.');
   }
   var q=location.search.match(/lang=(el|en)/);
   set(q?q[1]:((navigator.language||'en').toLowerCase().indexOf('el')===0?'el':'en'));
