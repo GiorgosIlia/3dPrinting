@@ -710,7 +710,7 @@ html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
 
 (function(){
   /* To show photos: put the image files in an "images" folder next to this index.html and list their names here, for example ['print-1.jpg','print-2.jpg'] */
-  var PHOTOS=[];
+  var PHOTOS=['print-1.jpg','print-2.jpg'];
   var g=document.getElementById('gal'),sec=document.getElementById('gallery');
   if(!g||!PHOTOS.length)return;
   PHOTOS.forEach(function(f){var im=new Image();im.loading='lazy';im.alt='3D printed part';im.onload=function(){sec.hidden=false};im.onerror=function(){im.remove()};im.src='images/'+f;g.appendChild(im)});
