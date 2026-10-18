@@ -7,6 +7,9 @@
 <meta name="description" id="md" content="Custom 3D printing in Thessaloniki: prototypes, spare parts, miniatures and car parts in PLA, PETG, ASA, TPU and nylon. Send your file and get an instant estimate.">
 <meta name="theme-color" content="#2f5bea">
 <link rel="canonical" href="https://mr3dprinter.eu/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://mr3dprinter.eu/">
 <meta property="og:title" content="Mr 3D Printer | 3D Printing Service in Thessaloniki">
@@ -129,10 +132,28 @@ section.pg{border-top:0;padding:36px 0 0}
 .tile .go{display:inline-block;margin-top:14px;font-weight:500;color:var(--blue)}
 .nx{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px}
 .nx p{margin:0;font:700 clamp(20px,3vw,26px) "Bricolage Grotesque",system-ui,sans-serif}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:0 0 8px}
-.st{background:var(--surface);padding:20px 14px;text-align:center}
-.st b{display:block;font:800 clamp(26px,4vw,38px) "Bricolage Grotesque",system-ui,sans-serif;letter-spacing:-.02em;color:var(--blue)}
-.st span{color:var(--muted);font-size:14px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin:8px 0 16px}
+.st{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--blue);border-radius:12px;padding:26px 16px 22px;text-align:center}
+.st b{display:block;font:800 clamp(44px,6.5vw,68px)/1 "Bricolage Grotesque",system-ui,sans-serif;letter-spacing:-.03em;color:var(--blue)}
+.st>span{display:block;margin-top:8px;color:var(--muted);font-size:14px;font-weight:500}
+.chk{display:flex;align-items:center;gap:10px;font-weight:500;cursor:pointer}
+.chk input{width:18px;height:18px;margin:0;accent-color:var(--blue)}
+.sendbox{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:32px}
+.sb-t h2{margin-bottom:12px}
+.sb-l{list-style:none;padding:0;margin:0;color:var(--muted)}
+.sb-l li{padding-left:24px;position:relative;margin:6px 0}
+.sb-l li::before{content:'¹3';position:absolute;left:0;color:var(--blue);font-weight:700}
+.drop{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;min-height:170px;border:2px dashed var(--blue);border-radius:14px;padding:22px;cursor:pointer;background:var(--bg);transition:background .2s}
+.drop:hover,.drop.over{background:rgba(47,91,234,.1);border-style:solid}
+.drop:focus-within{outline:3px solid var(--blue);outline-offset:3px}
+.drop input{position:absolute;opacity:0;width:1px;height:1px}
+.drop svg{width:40px;height:40px;fill:none;stroke:var(--blue);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.drop b{font-size:18px}
+.drop .fh{color:var(--muted);font-size:14px}
+.fname{font-weight:500;color:var(--blue);word-break:break-all}
+.fname.bad{color:#c0392b}
+.fmail{margin-top:14px;width:100%;text-align:center}
+@media (max-width:860px){.sendbox{grid-template-columns:1fr;padding:22px}}
 .pc h3{font-size:26px;margin:0 0 8px}
 .pc p{margin:8px 0;color:var(--muted)}
 .pc .mat b{color:var(--ink)}
@@ -147,7 +168,7 @@ section.pg{border-top:0;padding:36px 0 0}
 @media (max-width:860px){
 .wrap{padding:0 16px}
 .hd{flex-wrap:nowrap;gap:8px;padding-top:10px;padding-bottom:10px}
-.logo{font-size:16px;gap:7px}.logo svg{width:24px;height:24px}
+.logo{font-size:16px;gap:7px}.logo svg{width:28px;height:28px}
 .ctl{margin-left:auto;gap:6px}
 .lang{padding:5px 10px;font-size:12.5px}
 .th{width:34px;height:34px}
@@ -170,7 +191,7 @@ html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
 </head>
 <body>
 <header class="bar"><div class="wrap hd">
-  <a class="logo" data-pg="#home" href="#home" aria-label="Mr 3D Printer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 21 7 12 12 3 7z" fill="#f2c230"/><path d="M3 7 12 12V22L3 17z" fill="var(--blue)"/><path d="M21 7 12 12V22L21 17z" fill="var(--blue)" opacity=".7"/></svg><span>Mr<b class="d3">3D</b>Printer</span></a>
+  <a class="logo" data-pg="#home" href="#home" aria-label="Mr 3D Printer"><svg aria-hidden="true" viewBox="0 0 64 64"><defs><clipPath id="lm"><path transform="translate(32 32) scale(1.12) translate(-32 -30.5)" d="M32 27 C28 22 20 22 15 26 C11 29 8 28 6 24 C5 31 10 39 18 38 C24 37 28 33 32 34 C36 33 40 37 46 38 C54 39 59 31 58 24 C56 28 53 29 49 26 C44 22 36 22 32 27 Z"/></clipPath></defs><rect width="64" height="64" rx="14" fill="#14202b"/><rect x="1" y="1" width="62" height="62" rx="13" fill="none" stroke="#4a5d73" stroke-width="2"/><g clip-path="url(#lm)"><rect x="0" y="22.0" width="64" height="2.9" fill="#f2c230"/><rect x="0" y="25.1" width="64" height="2.9" fill="#7c9bff"/><rect x="0" y="28.2" width="64" height="2.9" fill="#6a8cf6"/><rect x="0" y="31.3" width="64" height="2.9" fill="#4f78f0"/><rect x="0" y="34.4" width="64" height="2.9" fill="#3f68ec"/><rect x="0" y="37.5" width="64" height="2.9" fill="#2f5bea"/></g></svg><span>Mr<b class="d3">3D</b>Printer</span></a>
   <nav class="nv" id="nv" aria-label="Main"><a data-pg="#home" href="#home" aria-current="page"><span lang="en">Home</span><span lang="el">Αρχική</span></a><a data-pg="#materials" href="#materials"><span lang="en">Materials</span><span lang="el">Υλικά</span></a><a data-pg="#estimate" href="#estimate"><span lang="en">Estimate</span><span lang="el">Εκτίμηση</span></a><a data-pg="#how" href="#how"><span lang="en">How it works</span><span lang="el">Πώς λειτουργεί</span></a><a data-pg="#faq" href="#faq"><span lang="en">FAQ</span><span lang="el">Ερωτήσεις</span></a><a data-pg="#contact" href="#contact"><span lang="en">Contact</span><span lang="el">Επικοινωνία</span></a></nav>
   <div class="ctl"><button class="lang" id="lg" type="button">Ελληνικά</button><button class="th" id="th" type="button" title="Light / dark mode · Φωτεινή / σκούρα λειτουργία" aria-label="Light / dark mode">☾</button><button class="burger" id="bg" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nv"><span></span><span></span><span></span></button></div>
 </div></header>
@@ -198,14 +219,15 @@ html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
   </div>
 </div>
 
-<div class="stats"><div class="st"><b><span lang="en">8</span><span lang="el">8</span></b><span><span lang="en">materials</span><span lang="el">υλικά</span></span></div><div class="st"><b><span lang="en">250 mm</span><span lang="el">250 mm</span></b><span><span lang="en">max size per side</span><span lang="el">μέγιστο μέγεθος ανά πλευρά</span></span></div><div class="st"><b><span lang="en">±0.2 mm</span><span lang="el">±0,2 mm</span></b><span><span lang="en">typical accuracy</span><span lang="el">τυπική ακρίβεια</span></span></div><div class="st"><b><span lang="en">2–5</span><span lang="el">2–5</span></b><span><span lang="en">working days to ship</span><span lang="el">εργάσιμες ημέρες για αποστολή</span></span></div></div>
+<div class="stats"><div class="st"><b><span lang="en" data-to="8" data-dec="0" data-pre="" data-suf="" data-sep=".">8</span><span lang="el" data-to="8" data-dec="0" data-pre="" data-suf="" data-sep=",">8</span></b><span><span lang="en">materials</span><span lang="el">υλικά</span></span></div><div class="st"><b><span lang="en" data-to="250" data-dec="0" data-pre="" data-suf=" mm" data-sep=".">250 mm</span><span lang="el" data-to="250" data-dec="0" data-pre="" data-suf=" mm" data-sep=",">250 mm</span></b><span><span lang="en">max size per side</span><span lang="el">μέγιστο μέγεθος ανά πλευρά</span></span></div><div class="st"><b><span lang="en" data-to="0.2" data-dec="1" data-pre="±" data-suf=" mm" data-sep=".">±0.2 mm</span><span lang="el" data-to="0.2" data-dec="1" data-pre="±" data-suf=" mm" data-sep=",">±0,2 mm</span></b><span><span lang="en">typical accuracy</span><span lang="el">τυπική ακρίβεια</span></span></div><div class="st"><b><span lang="en" data-to="5" data-dec="0" data-pre="2–" data-suf="" data-sep=".">2–5</span><span lang="el" data-to="5" data-dec="0" data-pre="2–" data-suf="" data-sep=",">2–5</span></b><span><span lang="en">working days to ship</span><span lang="el">εργάσιμες ημέρες για αποστολή</span></span></div></div>
+
+<section id="gallery" hidden><h2><span lang="en">Recent prints</span><span lang="el">Πρόσφατες εκτυπώσεις</span></h2><div class="gal" id="gal"></div></section>
 
 <section id="print"><h2><span lang="en">What we print</span><span lang="el">Τι τυπώνουμε</span></h2><p class="lead"><span lang="en">A few things you can order from us.</span><span lang="el">Μερικά από όσα μπορείτε να παραγγείλετε.</span></p><div class="cards"><article class="card pc"><h3><span lang="en">Miniatures</span><span lang="el">Μινιατούρες</span></h3><p><span lang="en">Tabletop figures, game pieces, chess sets and display models, with fine detail and a smooth finish.</span><span lang="el">Φιγούρες για επιτραπέζια, πιόνια, σκακιέρες και μοντέλα επίδειξης, με λεπτομέρεια και λεία επιφάνεια.</span></p><p class="mat"><b><span lang="en">Best in:</span><span lang="el">Ιδανικά σε:</span></b> <span lang="en">PLA or resin</span><span lang="el">PLA ή ρητίνη</span></p><a class="go" data-pg="#estimate" href="#estimate"><span lang="en">Estimate yours →</span><span lang="el">Υπολογίστε το κόστος →</span></a></article><article class="card pc"><h3><span lang="en">Car parts</span><span lang="el">Ανταλλακτικά αυτοκινήτου</span></h3><p><span lang="en">Cup holders, trim clips, knobs, brackets and covers made to fit your car.</span><span lang="el">Βάσεις ποτηριών, κλιπ επένδυσης, πόμολα, βάσεις και καλύμματα φτιαγμένα στα μέτρα του αυτοκινήτου σας.</span></p><p class="mat"><b><span lang="en">Best in:</span><span lang="el">Ιδανικά σε:</span></b> <span lang="en">ASA or PETG, carbon nylon for loads</span><span lang="el">ASA ή PETG, nylon με ίνες άνθρακα για φορτία</span></p><p class="warn"><span lang="en">Not for safety-critical parts such as brakes or steering.</span><span lang="el">Όχι για εξαρτήματα ασφαλείας, όπως φρένα ή τιμόνι.</span></p><a class="go" data-pg="#estimate" href="#estimate"><span lang="en">Estimate yours →</span><span lang="el">Υπολογίστε το κόστος →</span></a></article><article class="card pc"><h3><span lang="en">Everyday items</span><span lang="el">Καθημερινά αντικείμενα</span></h3><p><span lang="en">Hooks, holders, organisers, replacement knobs and small spare parts for the home.</span><span lang="el">Γάντζοι, βάσεις, οργανωτές, ανταλλακτικά πόμολα και μικρά ανταλλακτικά για το σπίτι.</span></p><p class="mat"><b><span lang="en">Best in:</span><span lang="el">Ιδανικά σε:</span></b> <span lang="en">PLA or PETG</span><span lang="el">PLA ή PETG</span></p><p class="warn"><span lang="en">Not intended for food contact.</span><span lang="el">Όχι για επαφή με τρόφιμα.</span></p><a class="go" data-pg="#estimate" href="#estimate"><span lang="en">Estimate yours →</span><span lang="el">Υπολογίστε το κόστος →</span></a></article></div></section>
 
-<section id="gallery"><h2><span lang="en">Recent prints</span><span lang="el">Πρόσφατες εκτυπώσεις</span></h2><div class="gal" id="gal"></div></section></div>
-
 <section id="why"><h2><span lang="en">Why choose us</span><span lang="el">Γιατί να μας επιλέξετε</span></h2><div class="why"><div class="wy"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><h3><span lang="en">Fast turnaround</span><span lang="el">Γρήγορη παράδοση</span></h3><p><span lang="en">Most orders ship in 2–5 working days.</span><span lang="el">Οι περισσότερες παραγγελίες αποστέλλονται σε 2–5 εργάσιμες.</span></p></div><div class="wy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><h3><span lang="en">Local in Thessaloniki</span><span lang="el">Τοπικά στη Θεσσαλονίκη</span></h3><p><span lang="en">Free pickup from our workshop by appointment, and shipping across the EU.</span><span lang="el">Δωρεάν παραλαβή από το εργαστήριο κατόπιν ραντεβού και αποστολές σε όλη την ΕΕ.</span></p></div><div class="wy"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h2M12 12h2M8 16h2M12 16h2"/></svg><h3><span lang="en">Instant estimate</span><span lang="el">Άμεση εκτίμηση</span></h3><p><span lang="en">Enter your part's size and see a price in seconds, with no sign-up.</span><span lang="el">Βάλτε τις διαστάσεις και δείτε τιμή σε δευτερόλεπτα, χωρίς εγγραφή.</span></p></div><div class="wy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 8l9 5 9-5z"/><path d="M3 13l9 5 9-5"/></svg><h3><span lang="en">Eight materials</span><span lang="el">Οκτώ υλικά</span></h3><p><span lang="en">From everyday PLA to tough ASA, flexible TPU and carbon nylon.</span><span lang="el">Από καθημερινό PLA μέχρι ανθεκτικό ASA, εύκαμπτο TPU και nylon με ίνες άνθρακα.</span></p></div></div></section>
 
+<section id="send"><div class="sendbox"><div class="sb-t"><h2><span lang="en">Ready to order? Send us your file</span><span lang="el">Έτοιμοι να παραγγείλετε; Στείλτε μας το αρχείο σας</span></h2><p class="lead"><span lang="en">Drop your 3D file below, then email it to us. We reply with a final price within a day.</span><span lang="el">Ρίξτε εδώ το αρχείο 3D και στείλτε το με email. Απαντάμε με την τελική τιμή μέσα σε μία ημέρα.</span></p><ul class="sb-l"><li><span lang="en">STL, 3MF, STEP or OBJ files</span><span lang="el">Αρχεία STL, 3MF, STEP ή OBJ</span></li><li><span lang="en">Up to 250 mm per side</span><span lang="el">Έως 250 mm ανά πλευρά</span></li><li><span lang="en">Your file is never uploaded to this site</span><span lang="el">Το αρχείο σας δεν ανεβαίνει ποτέ σε αυτόν τον ιστότοπο</span></li></ul></div><div class="sb-d"><label class="drop"><input type="file" class="ff" accept=".stl,.3mf,.step,.stp,.obj"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg><b><span lang="en">Drop your file here</span><span lang="el">Αφήστε εδώ το αρχείο σας</span></b><span class="fh"><span lang="en">or click to choose a file</span><span lang="el">ή πατήστε για να επιλέξετε αρχείο</span></span><span class="fname" aria-live="polite"></span></label><a class="btn fmail" href="mailto:info@mr3dprinter.eu"><span lang="en">Email us your file</span><span lang="el">Στείλτε μας το αρχείο με email</span></a><p class="note"><span lang="en">Browsers cannot attach files by themselves. The button opens your email with the file name filled in, so please attach the file before you send. For files over 20 MB, send a download link instead.</span><span lang="el">Οι περιηγητές δεν μπορούν να επισυνάψουν αρχεία μόνοι τους. Το κουμπί ανοίγει το email σας με το όνομα του αρχείου συμπληρωμένο, οπότε επισυνάψτε το αρχείο πριν το στείλετε. Για αρχεία πάνω από 20 MB στείλτε σύνδεσμο λήψης.</span></p></div></div></section></div>
 <div class="view" data-view="materials"><section class="pg" lang="en"><h1>Materials &amp; prices</h1><p class="lead">Pick the right plastic. Typical retail prices per kg.</p></section>
 <section class="pg" lang="el"><h1>Υλικά &amp; τιμές</h1><p class="lead">Διαλέξτε το σωστό πλαστικό. Ενδεικτικές τιμές ανά kg.</p></section>
 
@@ -233,10 +255,10 @@ html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
     <tr><td><span class='sw' style='background:#2f5bea'></span>PLA</td><td>Μακέτες, αντικείμενα επίδειξης, δοκιμές εφαρμογής</td><td>Μέτρια, άκαμπτο</td><td>55 °C</td><td>από €22 / kg</td></tr>
     <tr><td><span class='sw' style='background:#f2c230'></span>PETG</td><td>Βάσεις, περιβλήματα, επαφή με νερό</td><td>Υψηλή, ελαφρώς εύκαμπτο</td><td>75 °C</td><td>από €24 / kg</td></tr>
     <tr><td><span class='sw' style='background:#8a96a3'></span>ASA</td><td>Εξωτερικά εξαρτήματα, εσωτερικά αυτοκινήτων</td><td>Υψηλή, ανθεκτικό στην UV</td><td>95 °C</td><td>από €32 / kg</td></tr>
-    <tr><td><span class='sw' style='background:#e0684b'></span>ABS</td><td>Αντισταθμίζουν περιβλήματα, εργαλεία, τεμάχια για τρίψιμο ή βαφή</td><td>Υψηλή, ανθεκτικό σε χτυπήματα</td><td>90 °C</td><td>από €28 / kg</td></tr>
+    <tr><td><span class='sw' style='background:#e0684b'></span>ABS</td><td>Ανθεκτικά περιβλήματα, εργαλεία, τεμάχια για τρίψιμο ή βαφή</td><td>Υψηλή, ανθεκτικό σε χτυπήματα</td><td>90 °C</td><td>από €28 / kg</td></tr>
     <tr><td><span class='sw' style='background:#9b59d0'></span>TPU</td><td>Εύκαμπτα τεμάχια: στεγανοποιήσεις, λαβές, προφυλακτήρες, θήκες κινητών</td><td>Εύκαμπτο, ανθεκτικό στη φθορά</td><td>80 °C</td><td>από €45 / kg</td></tr>
-    <tr><td><span class='sw' style='background:#c9b79c'></span>Nylon (PA12)</td><td>Γρανάζια, βαρδούλες, κινούμενα εξαρτήματα</td><td>Πολύ υψηλή, χαμηλή τριβή</td><td>110 °C</td><td>από €58 / kg</td></tr>
-    <tr><td><span class='sw' style='background:#2b2f36'></span>Nylon με ίνες άνθρακα (PA-CF)</td><td>Ακαμπτα, ελαφρά δομικά τεμάχια και εξαρτήματα στήριξης</td><td>Πολύ υψηλή, πολύ άκαμπτο</td><td>120 °C</td><td>από €75 / kg</td></tr>
+    <tr><td><span class='sw' style='background:#c9b79c'></span>Nylon (PA12)</td><td>Γρανάζια, μεντεσέδες, κινούμενα εξαρτήματα</td><td>Πολύ υψηλή, χαμηλή τριβή</td><td>110 °C</td><td>από €58 / kg</td></tr>
+    <tr><td><span class='sw' style='background:#2b2f36'></span>Nylon με ίνες άνθρακα (PA-CF)</td><td>Άκαμπτα, ελαφριά δομικά τεμάχια και εξαρτήματα στήριξης</td><td>Πολύ υψηλή, πολύ άκαμπτο</td><td>120 °C</td><td>από €75 / kg</td></tr>
     <tr><td><span class='sw' style='background:#3bb58a'></span>Ρητίνη</td><td>Λεπτομέρεια, μικρά ειδώλια, πρότυπα κοσμημάτων</td><td>Εύθραυστη, πολύ λεία</td><td>60 °C</td><td>από €25 / kg</td></tr>
   </table></div>
 </section>
@@ -263,13 +285,14 @@ html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
       <label>Quantity
         <input type="number" id="qty" value="1" min="1" max="500">
       </label>
+      <label class="chk"><input type="checkbox" id="asm"> Needs assembly (adds the setup fee)</label>
     </div>
     <div class="card" aria-live="polite">
       <div class="price"><span id="p">€0</span> <small>estimated total</small></div>
       <dl>
         <dt>Plastic used</dt><dd id="g">–</dd>
         <dt>Print time per part</dt><dd id="h">–</dd>
-        <dt>Setup fee (Applies only if the product requires assembly)</dt><dd>€9.00</dd>
+        <dt>Setup fee (Applies only if the product requires assembly)</dt><dd id="su">–</dd>
         <dt>Service fee (1.4%)</dt><dd id="fee">–</dd>
       </dl>
       <p style="margin:22px 0 0;display:flex;flex-wrap:wrap;gap:10px"><a class="btn" id="mail" href="mailto:info@mr3dprinter.eu">Email this estimate</a><button class="btn alt" id="copy" type="button" style="margin:0">Copy as text</button></p>
@@ -295,13 +318,14 @@ html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
       <label>Ποσότητα
         <input type='number' id='qtye' value='1' min='1' max='500'>
       </label>
+      <label class='chk'><input type='checkbox' id='asme'> Χρειάζεται συναρμολόγηση (προσθέτει το τέλος προετοιμασίας)</label>
     </div>
     <div class='card' aria-live='polite'>
       <div class='price'><span id='pe'>€0</span> <small>εκτιμώμενο σύνολο</small></div>
       <dl>
         <dt>Πλαστικό που καταναλώνεται</dt><dd id='ge'>–</dd>
         <dt>Χρόνος εκτύπωσης ανά τεμάχιο</dt><dd id='he'>–</dd>
-        <dt>Τέλος προετοιμασίας (Ισχύει μόνο εάν το προϊόν χρειάστεί συναρμολόγηση)</dt><dd>€9,00</dd>
+        <dt>Τέλος προετοιμασίας (Ισχύει μόνο εάν το προϊόν χρειάστεί συναρμολόγηση)</dt><dd id='sue'>–</dd>
         <dt>Τέλος υπηρεσίας (1,4%)</dt><dd id='feee'>–</dd>
       </dl>
       <p style='margin:22px 0 0;display:flex;flex-wrap:wrap;gap:10px'><a class='btn' id='maile' href='mailto:info@mr3dprinter.eu'>Στείλτε την εκτίμηση με email</a><button class='btn alt' id='copye' type='button' style='margin:0'>Αντιγραφή κειμένου</button></p>
@@ -390,6 +414,8 @@ html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
 <section class="nx" lang="el"><p>Έχετε ακόμη απορία;</p><a class="btn" data-pg="#contact" href="#contact">Επικοινωνήστε μαζί μας →</a></section></div>
 <div class="view" data-view="contact"><section class="pg" lang="en"><h1>Contact</h1><p class="lead">We reply within one working day.</p></section>
 <section class="pg" lang="el"><h1>Επικοινωνία</h1><p class="lead">Απαντάμε μέσα σε μία εργάσιμη.</p></section>
+
+<section id="send"><div class="sendbox"><div class="sb-t"><h2><span lang="en">Ready to order? Send us your file</span><span lang="el">Έτοιμοι να παραγγείλετε; Στείλτε μας το αρχείο σας</span></h2><p class="lead"><span lang="en">Drop your 3D file below, then email it to us. We reply with a final price within a day.</span><span lang="el">Ρίξτε εδώ το αρχείο 3D και στείλτε το με email. Απαντάμε με την τελική τιμή μέσα σε μία ημέρα.</span></p><ul class="sb-l"><li><span lang="en">STL, 3MF, STEP or OBJ files</span><span lang="el">Αρχεία STL, 3MF, STEP ή OBJ</span></li><li><span lang="en">Up to 250 mm per side</span><span lang="el">Έως 250 mm ανά πλευρά</span></li><li><span lang="en">Your file is never uploaded to this site</span><span lang="el">Το αρχείο σας δεν ανεβαίνει ποτέ σε αυτόν τον ιστότοπο</span></li></ul></div><div class="sb-d"><label class="drop"><input type="file" class="ff" accept=".stl,.3mf,.step,.stp,.obj"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg><b><span lang="en">Drop your file here</span><span lang="el">Αφήστε εδώ το αρχείο σας</span></b><span class="fh"><span lang="en">or click to choose a file</span><span lang="el">ή πατήστε για να επιλέξετε αρχείο</span></span><span class="fname" aria-live="polite"></span></label><a class="btn fmail" href="mailto:info@mr3dprinter.eu"><span lang="en">Email us your file</span><span lang="el">Στείλτε μας το αρχείο με email</span></a><p class="note"><span lang="en">Browsers cannot attach files by themselves. The button opens your email with the file name filled in, so please attach the file before you send. For files over 20 MB, send a download link instead.</span><span lang="el">Οι περιηγητές δεν μπορούν να επισυνάψουν αρχεία μόνοι τους. Το κουμπί ανοίγει το email σας με το όνομα του αρχείου συμπληρωμένο, οπότε επισυνάψτε το αρχείο πριν το στείλετε. Για αρχεία πάνω από 20 MB στείλτε σύνδεσμο λήψης.</span></p></div></div></section>
 
 <section id="contact" lang="en">
   <h2>Get in touch</h2>
@@ -716,6 +742,37 @@ html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
   if(!g||!PHOTOS.length)return;
   PHOTOS.forEach(function(f){var im=new Image();im.loading='lazy';im.alt='3D printed part';im.onload=function(){sec.hidden=false};im.onerror=function(){im.remove()};im.src='images/'+f;g.appendChild(im)});
 })();
+(function(){
+  var OK=/\.(stl|3mf|step|stp|obj)$/i,MAX=20*1024*1024;
+  var h=document.documentElement;
+  function size(b){return b>1048576?(b/1048576).toFixed(1)+' MB':Math.max(1,Math.round(b/1024))+' KB'}
+  document.querySelectorAll('.sendbox').forEach(function(box){
+    var inp=box.querySelector('.ff'),drop=box.querySelector('.drop'),nm=box.querySelector('.fname'),btn=box.querySelector('.fmail'),file=null,bad=false;
+    function el(){return h.lang==='el'}
+    function mail(){
+      var n=file?file.name:'',z=file?size(file.size):'',g=el();
+      var subj=(g?'Αρχείο 3D για προσφορά':'3D file for a quote')+(n?' – '+n:'');
+      var L=g?['Γεια σας Mr 3D Printer,','','Θα ήθελα προσφορά για το συνημμένο αρχείο 3D.','',n?'Αρχείο: '+n+' ('+z+')':'Αρχείο: (συνημμένο)','Υλικό:','Ποσότητα:','Επιθυμητή ημερομηνία:','','ΤΑ ΣΤΟΙΧΕΙΑ ΜΟΥ','  Ονοματεπώνυμο:','  Τηλέφωνο (προαιρετικά):','  Πόλη / χώρα παράδοσης:','','Ευχαριστώ,']
+        :['Hello Mr 3D Printer,','','I would like a quote for the attached 3D file.','',n?'File: '+n+' ('+z+')':'File: (attached)','Material:','Quantity:','Deadline:','','MY DETAILS','  Name:','  Phone (optional):','  Delivery city / country:','','Thank you,'];
+      return 'mailto:info@mr3dprinter.eu?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(L.join('\r\n'));
+    }
+    function render(){
+      nm.className='fname';
+      if(bad){nm.className='fname bad';nm.textContent=el()?'Επιλέξτε αρχείο STL, 3MF, STEP ή OBJ.':'Please choose an STL, 3MF, STEP or OBJ file.'}
+      else if(file){nm.textContent='\u2713 '+file.name+' ('+size(file.size)+')'+(file.size>MAX?(el()?' \u2014 πάνω από 20 MB: στείλτε σύνδεσμο λήψης':' \u2014 over 20 MB: send a download link instead'):'')}
+      else nm.textContent='';
+      btn.href=mail();
+    }
+    function pick(f){bad=false;file=null;if(f){if(OK.test(f.name))file=f;else bad=true}render()}
+    inp.addEventListener('change',function(){pick(inp.files&&inp.files[0])});
+    ['dragenter','dragover'].forEach(function(t){drop.addEventListener(t,function(e){e.preventDefault();drop.classList.add('over')})});
+    ['dragleave','drop'].forEach(function(t){drop.addEventListener(t,function(e){e.preventDefault();drop.classList.remove('over')})});
+    drop.addEventListener('drop',function(e){var f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0];if(f)pick(f)});
+    btn.addEventListener('click',function(){btn.href=mail()});
+    new MutationObserver(render).observe(h,{attributes:true,attributeFilter:['lang']});
+    render();
+  });
+})();
 function initCalc(s,el){
   var mailBody='',mailSubj='';
   function $(i){return document.getElementById(i+s)}
@@ -730,19 +787,20 @@ function initCalc(s,el){
     var g=vol*dens*(0.3+0.7*inf/100);
     var hrs=g/25;
     var each=g*rate+hrs*1.5;
-    var sub=9+each*q*(q>9?0.9:1),fee=sub*0.014,total=sub+fee;
+    var setup=$('asm').checked?9:0,sub=setup+each*q*(q>9?0.9:1),fee=sub*0.014,total=sub+fee;
+    $('su').textContent=setup?'€'+(el?'9,00':'9.00'):'–';
     $('p').textContent='€'+(el?total.toFixed(2).replace('.',','):total.toFixed(2));
     $('fee').textContent='€'+(el?fee.toFixed(2).replace('.',','):fee.toFixed(2));
     $('g').textContent=Math.round(g)+' g';
     $('h').textContent=hrs<1?Math.round(hrs*60)+(el?' λεπτά':' min'):hrs.toFixed(1)+(el?' ώρες':' h');
     var sel=$('mat'),mn=sel.options[sel.selectedIndex].text,ps=$('p').textContent,gs=$('g').textContent,hs=$('h').textContent;
-    var L=el?['Γεια σας Mr 3D Printer,','','Θα ήθελα προσφορά για εκτύπωση 3D. Τα στοιχεία μου είναι τα παρακάτω.','','ΔΙΑΣΤΑΣΕΙΣ ΤΕΜΑΧΙΟΥ','  Μήκος: '+x+' mm','  Πλάτος: '+y+' mm','  Ύψος: '+z+' mm','','ΡΥΘΜΙΣΕΙΣ ΕΚΤΥΠΩΣΗΣ','  Υλικό: '+mn,'  Πλήρωση: '+inf+'%','  Ποσότητα: '+q,'','ΕΚΤΙΜΗΣΗ ΑΠΟ ΤΟΝ ΙΣΤΟΤΟΠΟ ΣΑΣ','  Πλαστικό: '+gs,'  Χρόνος εκτύπωσης ανά τεμάχιο: '+hs,'  Εκτιμώμενο σύνολο: '+ps+' (ενδεικτικά)','','ΤΑ ΣΤΟΙΧΕΙΑ ΜΟΥ','  Ονοματεπώνυμο:','  Τηλέφωνο (προαιρετικά):','  Πόλη / χώρα παράδοσης:','  Επιθυμητή ημερομηνία:','','Επισυνάπτω το αρχείο 3D (STL, 3MF, STEP ή OBJ).','','Ευχαριστώ,']
-    :['Hello Mr 3D Printer,','','I would like a quote for a 3D print. My details are below.','','PART SIZE','  Length: '+x+' mm','  Width: '+y+' mm','  Height: '+z+' mm','','PRINT SETTINGS','  Material: '+mn,'  Infill: '+inf+'%','  Quantity: '+q,'','ESTIMATE FROM YOUR WEBSITE','  Plastic used: '+gs,'  Print time per part: '+hs,'  Estimated total: '+ps+' (rough guide)','','MY DETAILS','  Name:','  Phone (optional):','  Delivery city / country:','  Deadline:','','My 3D file is attached (STL, 3MF, STEP or OBJ).','','Thank you,'];
+    var L=el?['Γεια σας Mr 3D Printer,','','Θα ήθελα προσφορά για εκτύπωση 3D. Τα στοιχεία μου είναι τα παρακάτω.','','ΔΙΑΣΤΑΣΕΙΣ ΤΕΜΑΧΙΟΥ','  Μήκος: '+x+' mm','  Πλάτος: '+y+' mm','  Ύψος: '+z+' mm','','ΡΥΘΜΙΣΕΙΣ ΕΚΤΥΠΩΣΗΣ','  Υλικό: '+mn,'  Πλήρωση: '+inf+'%','  Ποσότητα: '+q,'  Συναρμολόγηση: '+($('asm').checked?'ναι':'όχι'),'','ΕΚΤΙΜΗΣΗ ΑΠΟ ΤΟΝ ΙΣΤΟΤΟΠΟ ΣΑΣ','  Πλαστικό: '+gs,'  Χρόνος εκτύπωσης ανά τεμάχιο: '+hs,'  Εκτιμώμενο σύνολο: '+ps+' (ενδεικτικά)','','ΤΑ ΣΤΟΙΧΕΙΑ ΜΟΥ','  Ονοματεπώνυμο:','  Τηλέφωνο (προαιρετικά):','  Πόλη / χώρα παράδοσης:','  Επιθυμητή ημερομηνία:','','Επισυνάπτω το αρχείο 3D (STL, 3MF, STEP ή OBJ).','','Ευχαριστώ,']
+    :['Hello Mr 3D Printer,','','I would like a quote for a 3D print. My details are below.','','PART SIZE','  Length: '+x+' mm','  Width: '+y+' mm','  Height: '+z+' mm','','PRINT SETTINGS','  Material: '+mn,'  Infill: '+inf+'%','  Quantity: '+q,'  Assembly needed: '+($('asm').checked?'yes':'no'),'','ESTIMATE FROM YOUR WEBSITE','  Plastic used: '+gs,'  Print time per part: '+hs,'  Estimated total: '+ps+' (rough guide)','','MY DETAILS','  Name:','  Phone (optional):','  Delivery city / country:','  Deadline:','','My 3D file is attached (STL, 3MF, STEP or OBJ).','','Thank you,'];
     mailSubj=(el?'Αίτημα προσφοράς εκτύπωσης – ':'Print quote request – ')+mn+', '+x+' × '+y+' × '+z+' mm';
     mailBody=L.join('\r\n');
     $('mail').href='mailto:info@mr3dprinter.eu?subject='+encodeURIComponent(mailSubj)+'&body='+encodeURIComponent(mailBody);
   }
-  ['mat','x','y','z','inf','qty'].forEach(function(i){$(i).addEventListener('input',calc)});
+  ['mat','x','y','z','inf','qty','asm'].forEach(function(i){$(i).addEventListener('input',calc)});
   calc();
   var cb=$('copy');
   cb.addEventListener('click',function(){
